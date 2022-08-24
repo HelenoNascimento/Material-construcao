@@ -1,18 +1,22 @@
 const express = require('express');
 const app = express();
 const connection = require("./Database/database")
+const cors =require("cors");
 
     // config JSON form data response
+    app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({extended: false}));
-        // routes
+
+
+     // routes
     const routerProdu = require("./Produto/ProdutoRoute.js");
     
     app.use(routerProdu);
 
-app.get("/",(req, res)=>{
-    res.send("ola")
-})
+    app.get("/",(req, res)=>{
+        res.send("ola")
+    })
 
 
 //database
