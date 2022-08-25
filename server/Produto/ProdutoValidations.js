@@ -19,6 +19,8 @@ const produtoCreateValidation =() =>{
             .isLength({min:3})
             .withMessage("A descricao precisa ter no minimo 3 caracteres"),
         body("quantidade")
+            .isFloat()
+            .withMessage("Quantidade precisa ser um numero")
             .not()
             .equals("")
             .withMessage("A quantidade é obrigatoria"),
@@ -29,9 +31,11 @@ const produtoCreateValidation =() =>{
             .isLength({min:3})
             .withMessage("o Fornecedor precisa ter no minimo 3 caracteres"),
         body("valor")
+            .isFloat()
+            .withMessage("Valor precisa ser um numero")
             .not()
             .equals("")
-            .withMessage("A quantidade é obrigatoria")
+            .withMessage("O Valor é obrigatorio")
         ]     
 }
 

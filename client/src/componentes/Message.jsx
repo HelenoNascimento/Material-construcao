@@ -1,10 +1,10 @@
 import React from 'react'
 import "./Message.css";
 
-const Message = () => {
+const Message = ({msg, type}) => {
   return (
-    <div >
-      
+    <div className={`message ${type}`} >
+      <p>{msg}</p>
     </div>
   )
 }

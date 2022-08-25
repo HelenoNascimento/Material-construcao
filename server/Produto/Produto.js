@@ -13,11 +13,11 @@ const Produto = connection.define("Produto",{
         allowNull: false
     },
     quantidade:{
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     valor:{
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     fornecedor:{
