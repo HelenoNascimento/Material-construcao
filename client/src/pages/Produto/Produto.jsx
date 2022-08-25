@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import "./Produto.css"
 import Axios from "axios";
+import CardProd from '../../componentes/Produto/CardProd';
+import Message from '../../componentes/Message';
+import CadastroPro from '../../componentes/Produto/CadastroPro';
+
+
 
 
 const Produto = () => {
@@ -9,71 +14,64 @@ const Produto = () => {
     const [quantidade, setQuantidade] = useState("");
     const [fornecedor, setFornecedor] = useState("");
     const [valor, setValor] = useState("");
+    const [produtos, setProdutos] = useState("");
 
+    const [cadastrar , setCadastrar] = useState(false);
 
-
- 
-    const handleClickButton = async (e) =>{
+    
+    const handleCadastrar = (e) =>{
         e.preventDefault();
-
-        console.log(nome, descricao, quantidade)
-       Axios.post("http://localhost:3001/produto/register",{
-            nome: nome,
-            descricao: descricao,
-            quantidade: quantidade,
-            fornecedor: fornecedor,
-            valor: valor,
-        }).then((response) =>{
-            console.log(response);
-        }).catch(function (error) {
-            console.log(error);
-          });
-
-          setNome("");
-          setDescricao("");
-          setQuantidade("");
-          setFornecedor("");
-          setQuantidade("");
-          setValor("");
+        setCadastrar(true);
+        
+    }
+    const handleListar = (e) =>{
+        e.preventDefault();
+        setCadastrar(false);
+       
     }
 
+ 
+
+    useEffect(() => {
+        Axios.get("http://localhost:3001/produto").then((response)=>{
+            setProdutos(response.data);
+        })
+        console.log(produtos)
+    }, [cadastrar])
 
   return (
-    <div>
-       <form onSubmit={handleClickButton}>
-        <div className='input_container' >
-            <label>Nome:</label>
-            <input type="text" placeholder="Nome" 
-            onChange={(e) => setNome(e.target.value)} value={nome || ""}/>   
-        </div>
-        <div className='input_container'> 
-            <label>Descricao:</label>
-            <input type="text" placeholder="Descricao" 
-            onChange={(e) => setDescricao(e.target.value)} value={descricao || ""} />   
-        </div>
-        <div className='input_container'> 
-            <label>Quantidade:</label>
-            <input
-             type="text" 
-             placeholder="Quantidade"  
-            onChange={(e) => setQuantidade(e.target.value)} 
-            value={quantidade || ""}
-            />   
-        </div>
-        <div className='input_container'>
-            <label>Fornecedor:</label>
-            <input type="text" placeholder="Fornecedor"
-             onChange={(e) => setFornecedor(e.target.value)} value={fornecedor || ""}/>   
-        </div>
-        <div className='input_container'>
-            <label>Valor :</label>
-            <input type="text" placeholder="Valor" 
-            onChange={(e) => setValor(e.target.value)} value={valor || ""}/>   
-        </div>
-        <button className="register--button" >Cadastrar</button>
-       
+    <div className="container-produto">
+        <div className="row-buttons"> 
+        <button className="register--button" onClick={handleCadastrar}>Produtos</button>
+       <button className="register--button" onClick={handleListar}>Cadastrar</button>
         
-    </form>
+        </div>
+       
+      
+       
+      
+        {cadastrar === false ? ( < > <CadastroPro /> </> ): (
+            <div className="lista-produtos">
+            {produtos && produtos.map((produto) =>(
+               <CardProd 
+              key={produto.id}
+              nome={produto.nome}
+              descricao={produto.descricao}
+              quantidade={produto.quantidade}
+              fornecedor={produto.fornecedor}
+              valor={produto.valor}
+              
+              /> 
+            ))} 
+        </div>
+                )}
+              
+           
+      
+        
+        
+        
+    
     </div>
   )
 }

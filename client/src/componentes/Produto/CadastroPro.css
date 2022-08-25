@@ -1,0 +1,6 @@
+.formulario{
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+    margin: 0 auto;
+}

@@ -28,6 +28,19 @@ const register = async (req, res) =>{
 
 }
 
+const getProdutos = async(req, res)  =>{
+    let produtos = ''
+    Produto.findAll({
+        order:[
+            ['id', 'DESC']
+        ]
+    }).then(produtos =>{
+        res.send(produtos);
+    })
+    console.log(produtos)
+}
+
 module.exports ={
     register,
+    getProdutos,
 };
