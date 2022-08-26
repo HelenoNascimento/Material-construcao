@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react'
 import { IMaskInput } from "react-imask";
 import Axios from "axios";
 import Message from "../Message";
+import Select from 'react-select'
 
 const CadastroPro = () => {
 
@@ -16,7 +17,14 @@ const CadastroPro = () => {
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
 
-    
+    const options = [
+        { value: 'Ferramenta', label: 'Ferramenta' },
+        { value: 'Material', label: 'Material' },
+        { value: 'Decoracao', label: 'Decoracao' },
+        { value: 'Lazer', label: 'Lazer' },
+        
+        { value: 'Tinta', label: 'Tintal' }
+      ]
 
 
  
@@ -65,6 +73,10 @@ const CadastroPro = () => {
             <label>Descricao:</label>
             <input type="text" placeholder="Descricao" 
             onChange={(e) => setDescricao(e.target.value)} value={descricao || ""} />   
+        </div>
+        <div>
+        <Select options={options} placeholder="Tipo material" />
+
         </div>
         <div className='input_container'> 
             <label>Quantidade:</label>

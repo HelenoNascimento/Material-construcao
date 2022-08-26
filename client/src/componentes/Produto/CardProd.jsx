@@ -2,20 +2,40 @@ import React from 'react'
 
 import "./CardProd.css"
 
-const CardProd = (props) => {
+const CardProd = ({produtos}) => {
   return (
-    <div className="card--container">
-        <div className="card--topo">
-        <h2 className="card--title">{props.nome}</h2>
-        </div>
-        <div className="card--meio">
-        <p className="card--descricao">Descricao: {props.descricao}</p>
-        <p className="card--quantidade">Quantidade{props.quantidade}</p>
-        </div>
-        <div className="card--baixo">
-        <p className="card--fornecedor">Fornecedor: {props.fornecedor}</p>
-        <p className="card--valor">Valor: {props.valor}</p>
-        </div>
+    <div  className="card--container" >
+      
+               
+        {produtos.length >0 ?( 
+           <table style={{ width: 500 }}>
+            <thead>
+              <tr>
+              <th>Nome</th> 
+              <th>Descricao</th>
+              <th>Fornecedor</th>
+              <th>valor</th>
+              <th>Quantidade</th>
+              </tr>
+             
+              </thead>
+              <tbody>
+                {produtos.map(produto => (<tr> {produto.nome}
+                
+                  <td> {produto.descricao} </td>
+                  <td> {produto.fornecedor} </td>
+                  <td> {produto.valor} </td>
+                  <td> {produto.quantidade} </td>
+                
+                </tr>))}
+  
+              </tbody>
+             
+              
+              </table>
+        ): (
+      <p>Não tem tarefas cadastradas </p>
+    )}
     
     </div>
   )

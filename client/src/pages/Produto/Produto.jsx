@@ -21,12 +21,12 @@ const Produto = () => {
     
     const handleCadastrar = (e) =>{
         e.preventDefault();
-        setCadastrar(true);
+        setCadastrar(false);
         
     }
     const handleListar = (e) =>{
         e.preventDefault();
-        setCadastrar(false);
+        setCadastrar(true);
        
     }
 
@@ -50,19 +50,13 @@ const Produto = () => {
       
        
       
-        {cadastrar === false ? ( < > <CadastroPro /> </> ): (
+        {cadastrar === true ? ( < > <CadastroPro /> </> ): (
             <div className="lista-produtos">
-            {produtos && produtos.map((produto) =>(
-               <CardProd 
-              key={produto.id}
-              nome={produto.nome}
-              descricao={produto.descricao}
-              quantidade={produto.quantidade}
-              fornecedor={produto.fornecedor}
-              valor={produto.valor}
+          
+               <CardProd produtos={produtos}
               
               /> 
-            ))} 
+           
         </div>
                 )}
               
