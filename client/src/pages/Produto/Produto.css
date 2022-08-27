@@ -28,9 +28,27 @@ form{
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
+}
+.row-lista{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.row-pesquisa{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    gap: 1.2rem;
     flex-direction: row;
 }
-
+input,
+button,
 form input,
  .register--button{
     padding: 8px 15px;
@@ -38,7 +56,12 @@ form input,
     border-radius: 2px ;
     border: 1px solid #282c34;
 }
+form .select{
+    padding: 8px 15px;
+    margin-bottom: 1.5em;
+}
 
+button,
  .register--button{
     background-color: #61dafb;
     border: 1px solid #61dafb;
@@ -46,6 +69,7 @@ form input,
     transition: .5s;
     cursor: pointer;
 }
+
 form .register--button:hover{
     background-color: #fff;
     border-color: #282c34;

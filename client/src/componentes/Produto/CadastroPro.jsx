@@ -74,10 +74,7 @@ const CadastroPro = () => {
             <input type="text" placeholder="Descricao" 
             onChange={(e) => setDescricao(e.target.value)} value={descricao || ""} />   
         </div>
-        <div>
-        <Select options={options} placeholder="Tipo material" />
-
-        </div>
+       
         <div className='input_container'> 
             <label>Quantidade:</label>
             <input
@@ -95,9 +92,14 @@ const CadastroPro = () => {
              onChange={(e) => setFornecedor(e.target.value)} value={fornecedor || ""}/>   
         </div>
         <div className='input_container'>
-            <label>Valor :</label>
+            <label>Valor de venda :</label>
             <input type="text" placeholder="Valor" 
             onChange={(e) => setValor(e.target.value)} value={valor || ""}/>   
+
+        </div>
+        <div className='input_container'>
+     
+        <Select options={options} placeholder="Tipo material" className="select"/>
 
         </div>
         <button className="register--button" >Cadastrar</button>
