@@ -71,9 +71,41 @@ console.log(query)
     }
   }
 
+  //PESQUISANDO UM PRODUTO
+const pesquisaUmProduto = async(req, res) =>{
+    const { id } = req.body;
+    console.log(id)
+        Produto.findByPk(id)
+            .then((result) => {
+                res.json(result)
+            });
+      }
+
+      //atualizando produto
+
+      const updateProduto = async(req, res) =>{
+        const { id, nome, descricao, quantidade, fornecedor, valor } = req.body;
+
+        Produto.update(
+            {
+                nome: nome, 
+                descricao: descricao,
+                quantidade: quantidade, 
+                fornecedor: fornecedor, 
+                valor: valor},{
+                    where: {
+                        id: id
+                    }
+                }).then(() =>{
+                    res.status(200).json({  message: "Produto Atualizado com sucesso!" });
+                })
+      }
+
 module.exports ={
     register,
     getProdutos,
     pesquisaProduto,
     deleteProduto,
+    pesquisaUmProduto,
+    updateProduto,
 };

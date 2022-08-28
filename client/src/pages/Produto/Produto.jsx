@@ -4,6 +4,7 @@ import Axios from "axios";
 import CardProd from '../../componentes/Produto/CardProd';
 import Message from '../../componentes/Message';
 import CadastroPro from '../../componentes/Produto/CadastroPro';
+import Modal from '../../componentes/Modal';
 
 
 
@@ -16,9 +17,40 @@ const Produto = () => {
     const [valor, setValor] = useState("");
     const [produtos, setProdutos] = useState("");
     const [consulta, setConsulta] = useState("");
+    const [produtoEdit, setProdutoEdit] = useState("");
+    const [proId, setProId] = useState("");
+
+    const [produtoUpdate, setProdutoUpdate] = useState("");
 
     const [cadastrar , setCadastrar] = useState(false);
 
+    const hideOrShowModal = (display) =>{
+        const modal = document.querySelector("#modal");
+        if(display){
+          modal.classList.remove("hide")
+        }else{
+          modal.classList.add("hide");
+        }
+      }
+
+    const editProduto = (produto) =>{
+      //  hideOrShowModal(true);
+        
+     
+      setProdutoUpdate(produto)
+      hideOrShowModal(true)
+        //console.log(proId)
+        /*
+        Axios.post("http://localhost:3001/produto/pesquisaUm",{
+            id: id
+        }).then((response)=>{
+            setProdutoEdit(response.data);
+            
+            setConsulta("")
+        })
+
+*/
+    }
     
     const handleCadastrar = (e) =>{
         e.preventDefault();
@@ -75,12 +107,16 @@ const Produto = () => {
         })
         console.log(produtos)
     }, [cadastrar])
+    console.log(produtoEdit.id)
 
 
 
   return (
     <div className="container-produto">
-       
+        { produtoUpdate &&
+        <Modal  handleEdit={editProduto} produtoUpdate={produtoUpdate}/>
+        }
+           
         <div className="row-buttons"> 
         <button className="register--button" onClick={handleCadastrar}>Produtos</button>
        <button className="register--button" onClick={handleListar}>Cadastrar</button>
@@ -103,6 +139,7 @@ const Produto = () => {
              <div className="row-lista"> 
                <CardProd produtos={produtos}
                 handleDelete={handleDelete}
+                handleEdit={editProduto}
               /> 
                </div>
            

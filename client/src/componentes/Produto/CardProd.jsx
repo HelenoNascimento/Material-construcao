@@ -2,9 +2,23 @@ import {useState,useEffect} from 'react'
 import { AiFillDelete  } from 'react-icons/ai';
 import "./CardProd.css"
 import Axios from "axios";
+import Modal from '../Modal';
 
 
-const CardProd = ({produtos,handleDelete}) => {
+const CardProd = ({produtos,handleDelete,handleEdit}) => {
+  const [proId, setProId] = useState();
+  const [nome, setNome] = useState();
+  const [ produtoi, setProdutoi] = useState();
+  const hideOrShowModal = (display) =>{
+    const modal = document.querySelector("#modal");
+    if(display){
+      modal.classList.remove("hide")
+    }else{
+      modal.classList.add("hide");
+    }
+  }
+
+  
 
 
 useEffect(() => {
@@ -14,8 +28,9 @@ useEffect(() => {
 }, [produtos])
   return (
     <div  className="card--container" >
+     
       
-               
+            
         {produtos.length >0 ?( 
            <table >
             <thead>
@@ -38,7 +53,10 @@ useEffect(() => {
                   <td> {produto.fornecedor} </td>
                   <td> R$ {produto.valor}  </td>
                   <td> {produto.quantidade} </td>
-                  <td> <i onClick={() => {handleDelete(produto.id)}}><AiFillDelete  /></i> </td>
+                  <td>
+                     <i onClick={() => {handleDelete(produto.id)}}><AiFillDelete  /></i> 
+                     <i onClick={() => {handleEdit(produto)}}>aa</i> 
+                  </td>
                 
                 </tr>))}
   
