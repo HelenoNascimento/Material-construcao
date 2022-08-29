@@ -5,24 +5,27 @@ import CardProd from '../../componentes/Produto/CardProd';
 import Message from '../../componentes/Message';
 import CadastroPro from '../../componentes/Produto/CadastroPro';
 import Modal from '../../componentes/Modal';
+import ProdutoService from '../../Service/ProdutoService';
+import { useSelector, useDispatch } from "react-redux";
+
+//import { getAllProdutos } from "../../Service/ProdutoService";
 
 
 
 
 const Produto = () => {
-    const [nome, setNome] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const [quantidade, setQuantidade] = useState("");
-    const [fornecedor, setFornecedor] = useState("");
-    const [valor, setValor] = useState("");
+
     const [produtos, setProdutos] = useState("");
     const [consulta, setConsulta] = useState("");
-    const [produtoEdit, setProdutoEdit] = useState("");
-    const [proId, setProId] = useState("");
+
+    const [ loading, setLoading] = useState(true);
 
     const [produtoUpdate, setProdutoUpdate] = useState("");
 
     const [cadastrar , setCadastrar] = useState(false);
+
+
+
 
     const hideOrShowModal = (display) =>{
         const modal = document.querySelector("#modal");
@@ -34,23 +37,11 @@ const Produto = () => {
       }
 
     const editProduto = (produto) =>{
-      //  hideOrShowModal(true);
-        
-     
       setProdutoUpdate(produto)
       hideOrShowModal(true)
-        //console.log(proId)
-        /*
-        Axios.post("http://localhost:3001/produto/pesquisaUm",{
-            id: id
-        }).then((response)=>{
-            setProdutoEdit(response.data);
-            
-            setConsulta("")
-        })
-
-*/
+      
     }
+ 
     
     const handleCadastrar = (e) =>{
         e.preventDefault();
@@ -62,53 +53,64 @@ const Produto = () => {
         setCadastrar(true);
        
     }
-        if(consulta.length >2){
-                console.log("pesuisando "+ consulta)
-            Axios.post("http://localhost:3001/produto/pesquisa",{
-                nome: consulta,
-            }).then((response)=>{
-                setProdutos(response.data);
-                setConsulta("")
-            })
-        }
-
- const handlePesquisar  = (e) =>{
-    e.preventDefault();
     
+
+    
+
+
+
+ const handlePesquisar  = async (e)  =>{
+  e.preventDefault();
+      
+    setProdutos(ProdutoService.PesquisaProduto(consulta))
+    //pesquisar()
     console.log("pesuisando "+ consulta)
-    Axios.post("http://localhost:3001/produto/pesquisa",{
-        nome: consulta,
-    }).then((response)=>{
-        setProdutos(response.data);
-    })
-        
-    }
-
-    const handleConsultar = (e) =>{
-        e.preventDefault();
-       // setConsultar(true);
- }
- const handleDelete = (id) =>{
-    //e.preventDefault();
-      console.log(id)
-      Axios.post("http://localhost:3001/produto/delete",{
-            id: id,
-        }).then((response)=>{
-            setProdutos(produtos.filter((produto) => produto.id !== id));
-           
-        })
     
         
     }
+
+    
+ const handleDelete = (id) =>{
+   
+      console.log(id)
+      ProdutoService.deleteProduto(id);
+      setProdutos(produtos.filter((produto) => produto.id !== id));
+     
+    }
+    
+ 
+    useEffect(() => {
+
+        const loadAll = async () =>{
+        const prod = await ProdutoService.getAllProdutos();
+        setProdutos(prod)
+      }
+   
+     setLoading(false)
+     loadAll();
+    }, [cadastrar])
 
     useEffect(() => {
-        Axios.get("http://localhost:3001/produto").then((response)=>{
-            setProdutos(response.data);
-        })
-        console.log(produtos)
-    }, [cadastrar])
-    console.log(produtoEdit.id)
 
+      const pesquisar = async() =>{
+
+    let consultar = await ProdutoService.PesquisaProduto(consulta)
+        
+      setProdutos(consultar)
+        console.log(produtos)
+        console.log(consultar)
+      
+       }
+   
+    
+   setLoading(false)
+   pesquisar();
+  }, [consulta])
+
+
+    if(loading){
+      return <p>Carregando...</p>
+    }
 
 
   return (
@@ -137,10 +139,14 @@ const Produto = () => {
               </div>
             
              <div className="row-lista"> 
-               <CardProd produtos={produtos}
-                handleDelete={handleDelete}
-                handleEdit={editProduto}
-              /> 
+             
+             {produtos && 
+             <CardProd produtos={produtos}
+             handleDelete={handleDelete}
+             handleEdit={editProduto}  /> 
+             }
+               
+      
                </div>
            
         </div>

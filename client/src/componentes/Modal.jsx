@@ -56,7 +56,7 @@ const Modal = (produtoUpdate ) => {
       
        },[id])*/
        const updateProduto = (e) =>{
-        e.preventDefault();
+       
   
         const updateProduto = {
           

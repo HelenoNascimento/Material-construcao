@@ -1,5 +1,8 @@
 import {useState,useEffect} from 'react'
-import { AiFillDelete  } from 'react-icons/ai';
+import { AiFillDelete,AiFillEdit  } from 'react-icons/ai';
+import { BiCommentEdit  } from 'react-icons/bi';
+//BiCommentEdit
+//AiFillEdit
 import "./CardProd.css"
 import Axios from "axios";
 import Modal from '../Modal';
@@ -54,8 +57,12 @@ useEffect(() => {
                   <td> R$ {produto.valor}  </td>
                   <td> {produto.quantidade} </td>
                   <td>
-                     <i onClick={() => {handleDelete(produto.id)}}><AiFillDelete  /></i> 
-                     <i onClick={() => {handleEdit(produto)}}>aa</i> 
+                    <div className="icons">
+                    <i onClick={() => {handleEdit(produto)}}><BiCommentEdit /></i> 
+                    <i onClick={() => {handleDelete(produto.id)}}><AiFillDelete className='delete' /></i> 
+                     
+                    </div>
+                     
                   </td>
                 
                 </tr>))}
@@ -65,7 +72,7 @@ useEffect(() => {
               
               </table>
         ): (
-      <p>Não tem tarefas cadastradas </p>
+      <p>Não foi encontrado esse produto </p>
     )}
     
     </div>

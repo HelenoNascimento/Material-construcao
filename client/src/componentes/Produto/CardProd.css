@@ -81,3 +81,23 @@ tr:hover{
     background-color: #085F63;
     color: #fff;
 }
+
+.icons{
+    display: flex;
+    font-size: 1.3rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+.icons i{
+    font-size: 1.4rem;
+}
+.icons i .delete{
+    color: rgb(243, 154, 154);
+}
+.icons i .delete:hover{
+    color: rgb(255, 7, 7);
+}
+.icons i:hover{
+   color: rgb(45, 250, 107);
+}

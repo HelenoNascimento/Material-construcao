@@ -1,11 +1,52 @@
 
+
 import Axios from "axios";
 import { api } from "../utils/config"
+
+
+
+//Lista todos os produtos
+
+const getAllProdutos = async () => {
+ 
+       try {
+
+        const res = await fetch(api+"/produto")
+              .then((res) => res.json())
+              .catch((err) => err);
+             
+          return res;
+        
+      } catch (error) {
+        console.log(error);
+      }
+    
+       
+}
+
+
+// pequisando produto
+
+     const PesquisaProduto = async (consulta) =>{
+        const res = await Axios.post(api +"/produto/pesquisa",{
+        nome: consulta,
+    }).then((response)=>{
+            //console.log(response.data)
+            return response.data;
+        })
+        return res
+       
+
+    }
+
+
+
+
 
 //atualizando produto
 
 const updateProduto = async (produto) =>{
-    console.log("aqui")
+    
     try{
         const res = await Axios.post(api+ "/produto/update",{
             id: produto.id,
@@ -20,24 +61,27 @@ const updateProduto = async (produto) =>{
         console.log(error);
     }
 
-   /*
-            Axios.post(api+ "/produto/pesquisaUm",{
-                id: id
-            }).then((response)=>{
-                console.log(response.data);
-            }).catch(function (error) {
-   
-                console.log(error.response.data.errors[0].msg)
-                //setMessage(error.response.data.errors[0].msg);
-               // setError(error)
-              
-              });
-              
-            */
 }
+    // ****** deletando produto ***
+
+    const deleteProduto = async (id) =>{
+        try{
+            const res = await Axios.post(api+ "/produto/delete",{
+                id: id
+            })
+            return res;
+        }catch(error){
+            console.log(error)
+      }
+    
+    }
+
 
 const ProdutoService = {
-    updateProduto
+    updateProduto,
+    deleteProduto,
+    getAllProdutos,
+    PesquisaProduto
 }
 
 export default ProdutoService
