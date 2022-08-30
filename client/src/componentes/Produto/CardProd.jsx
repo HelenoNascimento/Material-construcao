@@ -53,7 +53,7 @@ useEffect(() => {
                   <td> {produto.id}</td>
                   <td> {produto.nome}</td>
                   <td> {produto.descricao} </td>
-                  <td> {produto.fornecedor} </td>
+                  <td> {produto.fornecedor.nome} </td>
                   <td> R$ {produto.valor}  </td>
                   <td> {produto.quantidade} </td>
                   <td>

@@ -14,8 +14,9 @@ const getAllProdutos = async () => {
         const res = await fetch(api+"/produto")
               .then((res) => res.json())
               .catch((err) => err);
-             
+             //console.log(res)
           return res;
+
         
       } catch (error) {
         console.log(error);

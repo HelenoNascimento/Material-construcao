@@ -24,12 +24,6 @@ const produtoCreateValidation =() =>{
             .not()
             .equals("")
             .withMessage("A quantidade é obrigatoria"),
-        body("fornecedor")
-            .not()
-            .equals("")
-            .withMessage("O fornecedor é obrigatoria")
-            .isLength({min:3})
-            .withMessage("o Fornecedor precisa ter no minimo 3 caracteres"),
         body("valor")
             .isFloat()
             .withMessage("Valor precisa ser um numero")

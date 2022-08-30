@@ -21,7 +21,7 @@ const Produto = () => {
     const [ loading, setLoading] = useState(true);
 
     const [produtoUpdate, setProdutoUpdate] = useState("");
-
+    const [ teste, setTeste] = useState("");
     const [cadastrar , setCadastrar] = useState(false);
 
 
@@ -83,7 +83,22 @@ const Produto = () => {
 
         const loadAll = async () =>{
         const prod = await ProdutoService.getAllProdutos();
-        setProdutos(prod)
+       setProdutos(prod)
+       setTeste(prod)
+       //console.log(teste)
+      /*  const newProduto ={
+          id: prod[0].id,
+          nome: prod[0].nome,
+          descricao: prod[0].descricao,
+          quantidade: prod[0].quantidade,
+          validator: prod[0].valor,
+          fornecedor: prod[0].fornecedor.nome
+        }*/
+        //setProdutos(newProduto)
+      //  console.log(newProduto)
+       //console.log(prod[0].fornecedor)
+      //console.log(prod)
+        
       }
    
      setLoading(false)
@@ -95,21 +110,24 @@ const Produto = () => {
       const pesquisar = async() =>{
         
     
-       let consultar = await await ProdutoService.getProdutoById(consulta)
-        setProdutos(consultar)
-      
+       let consultar =  await ProdutoService.getProdutoById(consulta)
+       //console.log(consultar[0])
+       setProdutos(consultar)
+       //console.log(consultar)
         if(!isNaN(consulta)){
-          console.log("Numero")
-          console.log(consulta)
+         // console.log("Numero")
+         // console.log(consulta)
           consultar = await ProdutoService.getProdutoById(consulta)
-          setProdutos(consultar)
-          console.log(produtos)
+        setProdutos(consultar)
+        setTeste(consultar)
+       // console.log(teste)
+         // console.log(produtos)
         }else{
-          console.log("string")
-          console.log(consulta)
-           consultar = await ProdutoService.PesquisaProduto(consulta)
+          //console.log("string")
+         // console.log(consulta)
+         consultar = await ProdutoService.PesquisaProduto(consulta)
            setProdutos(consultar)
-           console.log(produtos)
+           //console.log(produtos)
         }
     
      

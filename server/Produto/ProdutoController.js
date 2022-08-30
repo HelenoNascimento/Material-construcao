@@ -1,6 +1,7 @@
 const express = require("express");
 const { validationResult } = require("express-validator");
 const router = express.Router();
+const Fornecedor = require("../Fornecedor/Fornecedor")
 const Produto = require("./Produto")
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;              // biblioteca de operadores
@@ -8,7 +9,7 @@ const Op = Sequelize.Op;              // biblioteca de operadores
 // cadastrando um produto
 const register = async (req, res) =>{
 
-    const { nome, descricao, quantidade, fornecedor, valor } = req.body;
+    const { nome, descricao, quantidade, idFornecedor, valor } = req.body;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array()})
@@ -17,7 +18,7 @@ const register = async (req, res) =>{
         nome: nome,
         descricao: descricao,
         quantidade: quantidade,
-        fornecedor: fornecedor,
+        idFornecedor: idFornecedor,
         valor: valor,
     }).then(() =>{
         res.status(200).json({ Produto, message: "Produto atualizada com sucesso!" });
@@ -30,15 +31,17 @@ const register = async (req, res) =>{
 }
 
 const getProdutos = async(req, res)  =>{
-    let produtos = ''
+    let produtos = {}
     Produto.findAll({
         order:[
             ['id', 'DESC']
-        ]
+        ],
+        include: [{model: Fornecedor}]
     }).then(produtos =>{
         res.send(produtos);
     })
-    console.log(produtos) 
+   // console.log(produtos.fornecedor) 
+ //  return produtos
 }
 
 //PESQUISANDO PRODUTOS
@@ -47,10 +50,13 @@ const { nome } = req.body;
 const query = `%${nome}%`; // string de consulta
 console.log(query)
     Produto.findAll({
-        where: {nome: { [Op.like]: query }}
+        
+        where: {nome: { [Op.like]: query }},
+        include: [{model: Fornecedor}]
+        
     })
         .then((result) => {
-            res.json(result)
+            res.send(result);
         });
   }
 
@@ -60,7 +66,8 @@ const pesquisaProdutoID = async(req, res) =>{
     const query = `%${id}%`; // string de consulta
     console.log(query)
         Produto.findAll({
-            where: {id: { [Op.like]: query }}
+            where: {id: { [Op.like]: query }},
+            include: [{model: Fornecedor}]
         })
             .then((result) => {
                 res.json(result)
