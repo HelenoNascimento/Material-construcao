@@ -11,8 +11,10 @@ const cors =require("cors");
 
      // routes
     const routerProdu = require("./Produto/ProdutoRoute.js");
+    const routerForne = require("./Fornecedor/FornecedorRoute");
     
     app.use(routerProdu);
+    app.use(routerForne);
 
     app.get("/",(req, res)=>{
         res.send("ola")

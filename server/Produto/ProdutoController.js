@@ -54,6 +54,22 @@ console.log(query)
         });
   }
 
+  //PESQUISANDO PRODUTOS id
+const pesquisaProdutoID = async(req, res) =>{
+    const { id } = req.body;
+    const query = `%${id}%`; // string de consulta
+    console.log(query)
+        Produto.findAll({
+            where: {id: { [Op.like]: query }}
+        })
+            .then((result) => {
+                res.json(result)
+            });
+      }
+
+  //pesquisando produto pelo id
+
+
   //Deletando produto
 
   const deleteProduto = async (req, res) =>{
@@ -108,4 +124,5 @@ module.exports ={
     deleteProduto,
     pesquisaUmProduto,
     updateProduto,
+    pesquisaProdutoID
 };

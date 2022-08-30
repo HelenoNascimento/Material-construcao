@@ -5,11 +5,14 @@
     margin: 0 auto;
     flex-direction: column;
     min-width: 400px;
+    max-width: 90%;
 }
 .row-buttons{
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content:  right;
+    padding-right: 10%;
 }
 .row-buttons button{
     margin: 10px;

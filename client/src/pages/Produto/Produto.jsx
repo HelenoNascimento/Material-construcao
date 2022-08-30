@@ -93,12 +93,29 @@ const Produto = () => {
     useEffect(() => {
 
       const pesquisar = async() =>{
-
-    let consultar = await ProdutoService.PesquisaProduto(consulta)
         
-      setProdutos(consultar)
-        console.log(produtos)
-        console.log(consultar)
+    
+       let consultar = await await ProdutoService.getProdutoById(consulta)
+        setProdutos(consultar)
+      
+        if(!isNaN(consulta)){
+          console.log("Numero")
+          console.log(consulta)
+          consultar = await ProdutoService.getProdutoById(consulta)
+          setProdutos(consultar)
+          console.log(produtos)
+        }else{
+          console.log("string")
+          console.log(consulta)
+           consultar = await ProdutoService.PesquisaProduto(consulta)
+           setProdutos(consultar)
+           console.log(produtos)
+        }
+    
+     
+      
+    
+  
       
        }
    
@@ -133,7 +150,7 @@ const Produto = () => {
 
             <div className="row-pesquisa"> 
             
-                    <input type="text" placeholder="Digite o nome do material" 
+                    <input type="text" placeholder="Digite o nome ou codigo " 
                     onChange={(e) => setConsulta(e.target.value)}/>
                     <button onClick={handlePesquisar}>Pesquisar</button>
               </div>

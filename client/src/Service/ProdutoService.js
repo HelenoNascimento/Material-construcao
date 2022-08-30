@@ -35,9 +35,18 @@ const getAllProdutos = async () => {
             return response.data;
         })
         return res
-       
-
     }
+
+// pesquisando produto ID
+    const getProdutoById = async(id)=>{
+        const res = await Axios.post(api +"/produto/produtoid",{
+        id: id,
+    }).then((response)=>{
+        //console.log(response.data)
+        return response.data;
+    })
+    return res
+}
 
 
 
@@ -81,7 +90,8 @@ const ProdutoService = {
     updateProduto,
     deleteProduto,
     getAllProdutos,
-    PesquisaProduto
+    PesquisaProduto,
+    getProdutoById
 }
 
 export default ProdutoService
