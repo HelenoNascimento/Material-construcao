@@ -27,9 +27,26 @@ const register = async (req, res) =>{
         console.log(error);
     })
     
-
 }
 
+//listando todos fornecedores
+
+const getFornecedores = async(req, res)  =>{
+    //let produtos = {}
+    Fornecedor.findAll({
+        order:[
+            ['id', 'DESC']
+        ],
+    
+    }).then(fornecedores =>{
+        res.send(fornecedores);
+    })
+   // console.log(produtos.fornecedor) 
+ //  return produtos
+}
+
+
 module.exports ={
-    register
+    register,
+    getFornecedores
 }
