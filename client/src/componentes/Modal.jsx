@@ -1,6 +1,8 @@
 import {React, useState,useEffect} from 'react'
 import ProdutoService from '../Service/ProdutoService';
 import Axios from "axios";
+import Select from 'react-select'
+import FornecedorService from '../Service/FornecedorService';
 
 import "./Modal.css"
 
@@ -15,15 +17,19 @@ const Modal = (produtoUpdate ) => {
     const [nome, setNome] = useState("");
     const [descricao, setDescricao] = useState("");
     const [quantidade, setQuantidade] = useState("");
+    const [fornecedores, setFornecedores] = useState("");
     const [fornecedor, setFornecedor] = useState("");
+    const [fornecedorUpdate, setFornecedorUpdate] = useState("");
+    const [ idFornecedor, setIdFornecedor ] = useState(""); 
+    const [ novoFornecedor, setNovoFornecedor ] = useState(""); 
     const [ id, setId] = useState("");
     const [valor, setValor] = useState("");
     const [pro, setPro] = useState("");
     const  [produtoEdit, setProdutoEdit] = useState("");
     
-    const  [teste, setTeste] = useState("teste");
+    //const  [teste, setTeste] = useState("teste");
 
-    
+    const teste = []
 
     useEffect(()=>{
         
@@ -31,14 +37,37 @@ const Modal = (produtoUpdate ) => {
         setDescricao(desc)
         setNome(produtoUpdate.produtoUpdate.nome)
         setQuantidade(produtoUpdate.produtoUpdate.quantidade)
-        setFornecedor(produtoUpdate.produtoUpdate.fornecedor)
+        setFornecedorUpdate(produtoUpdate.produtoUpdate.fornecedor)
         setValor(produtoUpdate.produtoUpdate.valor)
         setId(produtoUpdate.produtoUpdate.id)
         setIsLoading(false);
-        
+        setIdFornecedor(fornecedorUpdate.id)
+       
     },[produtoUpdate])
 
-    
+    useEffect(() => {
+      const carregaFornecedor = async() =>{
+            const resultado = await FornecedorService.getAllFornecedores();
+            setFornecedores(resultado);
+           //console.log(resultado)
+          // console.log(fornecedores)
+      }
+      carregaFornecedor();
+  },[])
+
+  //console.log(idFornecedor)
+  console.log(idFornecedor)
+  if(fornecedores){
+    let cont =0 ;
+    fornecedores.forEach(fornecedor => {
+        
+        
+       teste[cont] =  { value: fornecedor.id, label: fornecedor.nome }
+       cont ++
+     });
+   //  console.log(teste)
+     //console.log(options)
+}
   //  let tes = produto.nomei
     
     //console.log(produto)
@@ -55,23 +84,60 @@ const Modal = (produtoUpdate ) => {
         }
       
        },[id])*/
-       const updateProduto = (e) =>{
-       
-  
-        const updateProduto = {
-          
-            id: id,
-            nome: nome,
-            descricao: descricao,
-            quantidade: quantidade,
-            fornecedor: fornecedor,
-            valor: valor, 
-        }
+      
 
-        ProdutoService.updateProduto(updateProduto);
-        console.log("atualizando");
-        console.log(updateProduto);
+    
+       const updateProduto = (e) =>{
+   // e.preventDefault()
+   
+        if(novoFornecedor){
+          console.log("entrou aqui")
+         // setNovoFornecedor(fornecedorUpdate.id)
+    
+         // setNovoFornecedor(idFornecedor)
+         //setIdFornecedor(novoFornecedor)
+
+         const updateProduto = {
+                  
+                    id: id,
+                    nome: nome,
+                    descricao: descricao,
+                    quantidade: quantidade,
+                    idFornecedor: novoFornecedor,
+                    valor: valor, 
+                  }
+           ProdutoService.updateProduto(updateProduto);
+        }else{
+           const updateProduto = {
+                          
+                    id: id,
+                    nome: nome,
+                    descricao: descricao,
+                    quantidade: quantidade,
+                    idFornecedor: fornecedorUpdate.id,
+                    valor: valor, 
+          }
+   ProdutoService.updateProduto(updateProduto);
+         
+        }
+        //setIdFornecedor(novoFornecedor)
+     
+        
+        if(novoFornecedor){
+          console.log("atualizando");
+          console.log(updateProduto);
+         
+      
+      //    ProdutoService.updateProduto(updateProduto);
+        }
+ // ProdutoService.updateProduto(updateProduto);
+       console.log(fornecedorUpdate)
+        //
+       
       }
+      console.log(updateProduto);
+      console.log(novoFornecedor)
+      //console.log(fornecedor)
       
   
    //<Select options={options} placeholder="Tipo material" className="select"/>
@@ -125,15 +191,16 @@ const Modal = (produtoUpdate ) => {
                
               <div className='input_container'>
                   <label>Fornecedor:</label>
-                  <input type="text" placeholder="Fornecedor"
-                   onChange={(e) => setFornecedor(e.target.value)} 
-                   value={fornecedor || ""}
-                   />   
+                  <Select 
+                  options={teste} placeholder="Fornecedores" className="select"  onChange={(e) => setNovoFornecedor(e.value)}
+                  
+                  />
+                  
               </div>
               
               
               
-           
+ 
              
               <button className="register--button">Alterar</button>
               

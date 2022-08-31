@@ -107,14 +107,14 @@ const pesquisaUmProduto = async(req, res) =>{
       //atualizando produto
 
       const updateProduto = async(req, res) =>{
-        const { id, nome, descricao, quantidade, fornecedor, valor } = req.body;
+        const { id, nome, descricao, quantidade, idFornecedor, valor } = req.body;
 
         Produto.update(
             {
                 nome: nome, 
                 descricao: descricao,
                 quantidade: quantidade, 
-                fornecedor: fornecedor, 
+                idFornecedor: idFornecedor, 
                 valor: valor},{
                     where: {
                         id: id

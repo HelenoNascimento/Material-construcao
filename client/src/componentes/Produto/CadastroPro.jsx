@@ -5,17 +5,20 @@ import { IMaskInput } from "react-imask";
 import Axios from "axios";
 import Message from "../Message";
 import Select from 'react-select'
+import FornecedorService from '../../Service/FornecedorService';
 
 const CadastroPro = () => {
 
     const [nome, setNome] = useState("");
     const [descricao, setDescricao] = useState("");
     const [quantidade, setQuantidade] = useState("");
-    const [fornecedor, setFornecedor] = useState("");
+    const [fornecedores, setFornecedores] = useState("");
     const [valor, setValor] = useState("");
     const [produtos, setProdutos] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
+    const [ idFornecedor, setIdFornecedor] = useState("");
+
 
     const options = [
         { value: 'Ferramenta', label: 'Ferramenta' },
@@ -25,18 +28,42 @@ const CadastroPro = () => {
         
         { value: 'Tinta', label: 'Tintal' }
       ]
+      let teste = [
+        
+      ]
+      
 
-
+      useEffect(() => {
+        const carregaFornecedor = async() =>{
+              const resultado = await FornecedorService.getAllFornecedores();
+              setFornecedores(resultado);
+             //console.log(resultado)
+             console.log(fornecedores)
+        }
+        carregaFornecedor();
+    },[])
+    if(fornecedores){
+        let cont =0 ;
+        fornecedores.forEach(fornecedor => {
+            
+            
+           teste[cont] =  { value: fornecedor.id, label: fornecedor.nome }
+           cont ++
+         });
+         console.log(teste)
+         console.log(options)
+    }
+   
  
     const handleClickButton = async (e) =>{
-        e.preventDefault();
+        //e.preventDefault();
        
         console.log(nome, descricao, quantidade)
        Axios.post("http://localhost:3001/produto/register",{
             nome: nome,
             descricao: descricao,
             quantidade: quantidade,
-            fornecedor: fornecedor,
+            idFornecedor: idFornecedor,
             valor: valor,
         }).then((response) =>{
             console.log(response);
@@ -44,7 +71,7 @@ const CadastroPro = () => {
           setNome("");
           setDescricao("");
           setQuantidade("");
-          setFornecedor("");
+          setFornecedores("");
           setQuantidade("");
           setValor("");
           setError(null)
@@ -59,7 +86,7 @@ const CadastroPro = () => {
           });
 
     }
-
+console.log(idFornecedor)
 
   return (
    
@@ -74,6 +101,8 @@ const CadastroPro = () => {
             <input type="text" placeholder="Descricao" 
             onChange={(e) => setDescricao(e.target.value)} value={descricao || ""} />   
         </div>
+      
+         
        
         <div className='input_container'> 
             <label>Quantidade:</label>
@@ -88,8 +117,7 @@ const CadastroPro = () => {
         
         <div className='input_container'>
             <label>Fornecedor:</label>
-            <input type="text" placeholder="Fornecedor"
-             onChange={(e) => setFornecedor(e.target.value)} value={fornecedor || ""}/>   
+            <Select options={teste} placeholder="Fornecedores" className="select"  onChange={(e) => setIdFornecedor(e.value)}/> 
         </div>
         <div className='input_container'>
             <label>Valor de venda :</label>
@@ -98,11 +126,15 @@ const CadastroPro = () => {
 
         </div>
         <div className='input_container'>
+          
+         
+                    
+                   
      
-        <Select options={options} placeholder="Tipo material" className="select"/>
 
         </div>
         <button className="register--button" >Cadastrar</button>
+
         {error && <Message msg={message} type= "error" /> }
        
         

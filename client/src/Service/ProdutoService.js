@@ -64,7 +64,7 @@ const updateProduto = async (produto) =>{
             descricao: produto.descricao,
             valor: produto.valor,
             quantidade: produto.quantidade,
-            fornecedor: produto.fornecedor
+            idFornecedor: produto.idFornecedor
         })
         return res;
     }catch(error){
