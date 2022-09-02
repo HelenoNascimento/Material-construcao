@@ -68,24 +68,8 @@ const Modal = (produtoUpdate ) => {
    //  console.log(teste)
      //console.log(options)
 }
-  //  let tes = produto.nomei
-    
-    //console.log(produto)
-       
-       const handleEdit =  () =>{
-        
-      }
 
-      // carregando dados do produto
-      /*useEffect(()=>{
-        if(id){
-         handleEdit()
-          
-        }
-      
-       },[id])*/
-      
-
+  
     
        const updateProduto = (e) =>{
    // e.preventDefault()

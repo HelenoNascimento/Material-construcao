@@ -6,6 +6,7 @@ import Axios from "axios";
 import Message from "../Message";
 import Select from 'react-select'
 import FornecedorService from '../../Service/FornecedorService';
+import ProdutoService from "../../Service/ProdutoService";
 
 const CadastroPro = () => {
 
@@ -57,6 +58,16 @@ const CadastroPro = () => {
  
     const handleClickButton = async (e) =>{
         //e.preventDefault();
+
+        const newProduto = {
+            nome: nome,
+            descricao: descricao,
+            quantidade: quantidade,
+            idFornecedor: idFornecedor,
+            valor: valor,
+        }
+
+        //ProdutoService.cadastraProduto(newProduto)
        
         console.log(nome, descricao, quantidade)
        Axios.post("http://localhost:3001/produto/register",{

@@ -45,7 +45,7 @@ form{
     height: auto;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
    
     gap: 1.2rem;
     flex-direction: row;
@@ -63,7 +63,19 @@ form .select{
     padding: 8px 15px;
     margin-bottom: 1.5em;
 }
-
+.pesquisaForne{
+   width: 25%;
+   margin-top: -1rem;
+}
+.pesquisaNome{
+    margin-left: 150px;
+}
+.button-pesquisa{
+    margin-right: 30px;
+}
+button i{
+    font-size: 1rem;
+}
 button,
  .register--button{
     background-color: #61dafb;

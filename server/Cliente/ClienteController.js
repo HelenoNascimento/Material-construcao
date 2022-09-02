@@ -1,11 +1,10 @@
+
 const express = require("express");
 const { validationResult } = require("express-validator");
 const router = express.Router();
-const Fornecedor = require("./Fornecedor")
+const Cliente = require("../Cliente/Cliente")
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;              // biblioteca de operadores
-
-
 
 // cadastrando um fornecedor
 const register = async (req, res) =>{
@@ -15,13 +14,13 @@ const register = async (req, res) =>{
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array()})
     }
-    const novoFornecedor = await Fornecedor.create({
+    const novoCliente = await Cliente.create({
         nome: nome,
         endereco: endereco,
         telefone: telefone,
        
     }).then(() =>{
-        res.status(200).json({ Fornecedor, message: "Produto atualizada com sucesso!" });
+        res.status(200).json({ novoCliente, message: "Cliente cadastrado com sucesso!" });
         
     }).catch((error) =>{
         console.log(error);
@@ -29,44 +28,24 @@ const register = async (req, res) =>{
     
 }
 
-//listando todos fornecedores
+//listando todos os clientes
 
-const getFornecedores = async(req, res)  =>{
+const getClientes = async(req, res)  =>{
     //let produtos = {}
-    Fornecedor.findAll({
+    Cliente.findAll({
         order:[
             ['id', 'DESC']
         ],
     
-    }).then(fornecedores =>{
-        res.send(fornecedores);
+    }).then(clientes =>{
+        res.send(clientes);
     })
    // console.log(produtos.fornecedor) 
  //  return produtos
 }
 
 
-
-const updateFornecedor = async(req, res) =>{
-    const { id, nome, telefone, endereco} = req.body;
-
-    Fornecedor.update(
-        {
-            
-            nome: nome, 
-            endereco: endereco,
-            telefone: telefone, 
-            },{
-                where: {
-                    id: id
-                }
-            }).then(() =>{
-                res.status(200).json({  message: "Fornecedor Atualizado com sucesso!" });
-            })
-  }
-
 module.exports ={
     register,
-    updateFornecedor,
-    getFornecedores
+    getClientes,
 }

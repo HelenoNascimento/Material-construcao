@@ -25,6 +25,21 @@ const getAllProdutos = async () => {
        
 }
 
+const cadastraProduto = async (produto) =>{
+    Axios.post(api+"/fornecedor/register",{
+        nome: produto.nome,
+        endereco: produto.endereco,
+        telefone: produto.telefone,
+        
+    }).then((response) =>{
+        console.log(response);
+     
+    }).catch(function (error) {
+        console.log(error)
+        
+      });
+}
+
 
 // pequisando produto
 
@@ -47,6 +62,16 @@ const getAllProdutos = async () => {
         return response.data;
     })
     return res
+}
+// pesquisando produto ID
+const getProdutosByFornecedor = async(idFornecedor)=>{
+    const res = await Axios.post(api +"/produto/produtoFornecedor",{
+    idfornecedor: idFornecedor,
+}).then((response)=>{
+    //console.log(response.data)
+    return response.data;
+})
+return res
 }
 
 
@@ -92,7 +117,9 @@ const ProdutoService = {
     deleteProduto,
     getAllProdutos,
     PesquisaProduto,
-    getProdutoById
+    getProdutoById,
+    getProdutosByFornecedor,
+    cadastraProduto
 }
 
 export default ProdutoService

@@ -73,6 +73,19 @@ const pesquisaProdutoID = async(req, res) =>{
                 res.json(result)
             });
       }
+        //PESQUISANDO PRODUTOS PELO FORNECEDOR
+const pesquisaProdutoFornecedor = async(req, res) =>{
+    const { idfornecedor } = req.body;
+    
+   // console.log(query)
+        Produto.findAll({
+            where: {idfornecedor: idfornecedor },
+            include: [{model: Fornecedor}]
+        })
+            .then((result) => {
+                res.json(result)
+            });
+      }
 
   //pesquisando produto pelo id
 
@@ -131,5 +144,6 @@ module.exports ={
     deleteProduto,
     pesquisaUmProduto,
     updateProduto,
-    pesquisaProdutoID
+    pesquisaProdutoID,
+    pesquisaProdutoFornecedor
 };

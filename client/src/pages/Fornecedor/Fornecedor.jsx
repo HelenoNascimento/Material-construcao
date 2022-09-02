@@ -14,10 +14,15 @@ const closeModal = ()  =>{
 const Fornecedor = () => {
   
   const [fornecedores, setFornecedores] = useState("");
+  const [ id, setId] = useState("");
   const [ nome, setNome] = useState("");
   const [endereco, setEndereco] = useState("");
   const [telefone, setTelefone] = useState("");
   const [atualizar, setAtualizar] = useState(false);
+
+  const [cadastrar , setCadastrar] = useState(true);
+
+
 
   const hideOrShowModal = (display) =>{
     const modal = document.querySelector("#modal-forne");
@@ -28,24 +33,71 @@ const Fornecedor = () => {
     }
   }
 
-const editProduto = (produto) =>{
- // setProdutoUpdate(produto)
+const openModal = () =>{
+  setCadastrar(true)
   hideOrShowModal(true)
+}
+
+const editFornecedor = (fornecedor) =>{
+ // setProdutoUpdate(produto)
+ setCadastrar(false)
+ hideOrShowModal(true)
+ setId(fornecedor.id)
+  setNome(fornecedor.nome)
+  setEndereco(fornecedor.endereco)
+  setTelefone(fornecedor.telefone)
+  console.log(nome)
+  
   
 }
 
+const atualizarFornecedor =(e) =>{
+
+    const updateFornecedor = {
+      id: id,
+      nome: nome,
+      telefone: telefone,
+      endereco: endereco,
+    }
+
+    FornecedorService.updateFornecedor(updateFornecedor)
+}
+
+
+
 const cadastrarFornecedor = (e) =>{
-  e.preventDefault();
-   const newFornecedor = {
-    nome: nome,
-    endereco: endereco,
-    telefone: telefone,
+ //e.preventDefault();
+   
+   if(cadastrar === true){
+    console.log("cadastrar")
+    const newFornecedor = {
+      nome: nome,
+      endereco: endereco,
+      telefone: telefone,
+     }
+     FornecedorService.cadFornecedor(newFornecedor);
+     setAtualizar(true)
+
+   }else if(cadastrar === false){
+    console.log("editar")
+    const updateFornecedor = {
+      id: id,
+      nome: nome,
+      telefone: telefone,
+      endereco: endereco,
+    }
+
+
+    FornecedorService.updateFornecedor(updateFornecedor)
+    setAtualizar(true)
+    
    }
-   FornecedorService.cadFornecedor(newFornecedor);
+  // FornecedorService.cadFornecedor(newFornecedor);
    setNome("");
    setEndereco("");
    setTelefone("");
    setAtualizar(true)
+   closeModal()
 }
  
   useEffect(() => {
@@ -61,7 +113,7 @@ const cadastrarFornecedor = (e) =>{
   return (
     <div className='container--fornecedor'>
       <div className="row"> 
-        <button onClick={editProduto}>Cadastrar Fornecedor</button>
+        <button onClick={openModal}>Cadastrar Fornecedor</button>
       </div>
 
     <div id="modal-forne" className="hide-forne">
@@ -69,7 +121,7 @@ const cadastrarFornecedor = (e) =>{
         <div className="modal-forne">
       
         <h2>Cadastrar Fornecedor:</h2>
-        <form className="formulario" onClick={cadastrarFornecedor}>
+        <form className="formulario" onSubmit={cadastrarFornecedor}>
         <div className='input_container' >
             <label>Nome:</label>
             <input type="text" placeholder="Nome" 
@@ -126,7 +178,7 @@ const cadastrarFornecedor = (e) =>{
                  
                   <td>
                     <div className="icons">
-                    <i ><BiCommentEdit onClick={() => {editProduto(fornecedor)}} /></i> 
+                    <i ><BiCommentEdit onClick={() => {editFornecedor(fornecedor)}} /></i> 
                     <i ><AiFillDelete className='delete' /></i> 
                      
                     </div>

@@ -12,7 +12,9 @@ const cors =require("cors");
      // routes
     const routerProdu = require("./Produto/ProdutoRoute.js");
     const routerForne = require("./Fornecedor/FornecedorRoute");
+    const routerClient = require("./Cliente/ClienteRoute");
     
+    app.use(routerClient);
     app.use(routerProdu);
     app.use(routerForne);
 

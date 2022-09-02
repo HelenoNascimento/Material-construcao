@@ -23,7 +23,22 @@ header{
 #nav-links li{
     margin-right: 1em;
     padding: .5em;
+    gap: 1.2em;
+    display: flex;
+    align-items: center;
+}
+#nav-links li a{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+#nav-links li i{
+    font-size: 1.8em;
    
+
+
+    
 }
 #nav-links li:hover{
     

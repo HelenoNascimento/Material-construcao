@@ -6,8 +6,10 @@ import Message from '../../componentes/Message';
 import CadastroPro from '../../componentes/Produto/CadastroPro';
 import Modal from '../../componentes/Modal';
 import ProdutoService from '../../Service/ProdutoService';
-import { useSelector, useDispatch } from "react-redux";
+import Select from 'react-select'
 
+import FornecedorService from '../../Service/FornecedorService';
+import { FcPlus } from 'react-icons/fc';
 //import { getAllProdutos } from "../../Service/ProdutoService";
 
 
@@ -23,8 +25,10 @@ const Produto = () => {
     const [produtoUpdate, setProdutoUpdate] = useState("");
     const [ teste, setTeste] = useState("");
     const [cadastrar , setCadastrar] = useState(false);
+    const [ fornecedoresPesq, setFornecedoresPesq ] = useState("");
+    const [pesquisaFornecedor, setPesquisaFornecedor] = useState("");
 
-
+    const fornLista = [];
 
 
     const hideOrShowModal = (display) =>{
@@ -55,8 +59,36 @@ const Produto = () => {
     }
     
 
-    
+    useEffect(() => {
+      const carregaFornecedor = async() =>{
+            const resultado = await FornecedorService.getAllFornecedores();
+            setFornecedoresPesq(resultado);
+           //console.log(resultado)
+          // console.log(fornecedores)
+      }
+      carregaFornecedor();
+    },[]) 
 
+    
+    if(fornecedoresPesq){
+      let cont =0 ;
+      fornecedoresPesq.forEach(fornePesquisa => {
+          
+          
+        fornLista[cont] =  { value: fornePesquisa.id, label: fornePesquisa.nome }
+         cont ++
+       });
+      }
+useEffect(() => {
+      const carregaProdutos = async() =>{
+        let consultar =  await ProdutoService.getProdutosByFornecedor(pesquisaFornecedor)
+        //console.log(consultar[0])
+        setProdutos(consultar)
+           console.log(produtos)
+          // console.log(fornecedores)
+      }
+      carregaProdutos();
+    },[pesquisaFornecedor]) 
 
 
  const handlePesquisar  = async (e)  =>{
@@ -85,20 +117,7 @@ const Produto = () => {
         const prod = await ProdutoService.getAllProdutos();
        setProdutos(prod)
        setTeste(prod)
-       //console.log(teste)
-      /*  const newProduto ={
-          id: prod[0].id,
-          nome: prod[0].nome,
-          descricao: prod[0].descricao,
-          quantidade: prod[0].quantidade,
-          validator: prod[0].valor,
-          fornecedor: prod[0].fornecedor.nome
-        }*/
-        //setProdutos(newProduto)
-      //  console.log(newProduto)
-       //console.log(prod[0].fornecedor)
-      //console.log(prod)
-        
+     
       }
    
      setLoading(false)
@@ -156,7 +175,7 @@ const Produto = () => {
            
         <div className="row-buttons"> 
         <button className="register--button" onClick={handleCadastrar}>Produtos</button>
-       <button className="register--button" onClick={handleListar}>Cadastrar</button>
+       <button className="register--button" onClick={handleListar}><i><FcPlus/></i>Cadastrar</button>
         
         </div>
        
@@ -166,28 +185,30 @@ const Produto = () => {
         {cadastrar === true ? ( < > <CadastroPro /> </> ): (
             <div className="lista-produtos">
 
-            <div className="row-pesquisa"> 
-            
-                    <input type="text" placeholder="Digite o nome ou codigo " 
-                    onChange={(e) => setConsulta(e.target.value)}/>
-                    <button onClick={handlePesquisar}>Pesquisar</button>
-              </div>
-            
-             <div className="row-lista"> 
-             
-             {produtos && 
-             <CardProd produtos={produtos}
-             handleDelete={handleDelete}
-             handleEdit={editProduto}  /> 
-             }
-               
-      
-               </div>
+                  <div className="row-pesquisa"> 
+                  
+                        <Select   options={fornLista} placeholder="Fornecedores" className="pesquisaForne"  
+                          onChange={(e) => setPesquisaFornecedor(e.value)}/>
+
+                          <input type="text" placeholder="Digite o nome ou codigo " 
+                          onChange={(e) => setConsulta(e.target.value)} className="pesquisaNome"/>
+                          
+                          <button className='button-pesquisa' onClick={handlePesquisar}>Pesquisar</button>
+                    </div>
+                  
+                  <div className="row-lista"> 
+                            
+                            {produtos && 
+                              <CardProd produtos={produtos}
+                              handleDelete={handleDelete}
+                              handleEdit={editProduto}  /> 
+                            }
+                    </div>
            
-        </div>
-                )}
+             </div>
+          )}
               
-           
+              
       
         
         

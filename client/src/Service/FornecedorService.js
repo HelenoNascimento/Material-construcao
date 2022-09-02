@@ -37,14 +37,32 @@ import { api } from "../utils/config"
             
           });
     }
+//atualizando fornecedor
 
+const updateFornecedor = async (fornecedor) =>{
+    
+    try{
+        const res = await Axios.post(api+ "/fornecedor/update",{
+            id: fornecedor.id,
+            nome: fornecedor.nome,
+            telefone: fornecedor.telefone,
+            endereco: fornecedor.endereco,
+            
+        })
+        return res;
+    }catch(error){
+        console.log(error);
+    }
+
+}
 
 
 
 
     const FornecedorService = {
         getAllFornecedores,
-        cadFornecedor
+        cadFornecedor,
+        updateFornecedor
     }
 
 
