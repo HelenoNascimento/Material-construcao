@@ -10,6 +10,7 @@ import Home from './pages/Home/Home';
 import Modal from './componentes/Modal';
 import Fornecedor from './pages/Fornecedor/Fornecedor';
 import Cliente from './pages/Cliente/Cliente';
+import Vendas from './pages/Vendas/Vendas';
 
 
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/produto" element={<Produto /> } />
           <Route path="/fornecedor" element={<Fornecedor />}/>
           <Route path="/cliente" element={<Cliente />}/>
+          <Route path="/vendas" element={<Vendas />}/>
         </Routes>
         </main>
       <Footer />

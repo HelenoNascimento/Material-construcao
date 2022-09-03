@@ -1,0 +1,132 @@
+.vendas-container{
+    height: auto;
+
+}
+
+.fade-vendas{
+    width: 100%;
+  
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: -200px;
+    background-color: #000;
+    opacity: 0.3;
+}
+
+.modal-vendas{
+    position: absolute;
+    top: 7%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 80%;
+    height: auto;
+    z-index: 1;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 20px;
+}
+
+#modal-vendas{
+    height: auto;
+}
+
+
+.vendas-client{
+    margin-top: 2rem;
+    border: 1px solid rgb(196, 193, 193);
+    width: 90%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+.busca-client{
+    width: 25%;
+}
+.dados-client{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.dados-client input{
+    padding: 6px 5px;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    border-radius: 4px ;
+    border: 1px solid rgb(185, 182, 182);
+    width: 150px;
+}
+.vendas-produto{
+    border: 2px solid rgb(245, 240, 240);
+    width: 90%;
+    height: auto;
+    margin-bottom: 1rem;
+     overflow: hidden;
+}
+.input_vendas{
+    display: flex;
+    width: 40%;
+ 
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 0.2rem;
+    
+}
+
+.input_vendas .label-nome{
+    margin-left: 1.2rem;
+}
+
+
+.pesq-produto,
+.row-adicionar{
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    border-bottom: 2px solid rgb(245, 240, 240);
+}
+.pesq-produto input,
+.row-produto input,
+.row-adicionar input{
+    padding: 6px 5px;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    border-radius: 4px ;
+    border: 1px solid rgb(185, 182, 182);
+    width: 150px;
+    padding-left: 20px;
+    margin-left: 20px;
+}
+.row-produto{
+    border-bottom: 2px solid rgb(245, 240, 240); 
+}
+.pesq-produto label,
+.row-adicionar label{
+    margin-left: 20px;
+}
+.row-produto .input-numerico,
+.row-adicionar .input-numerico{
+    width: 10%;
+}
+.row-produto label{
+    font-size: 0.8rem;
+    padding-left: 1rem;
+}
+.row-adicionar button{
+    margin-top: 0.5rem;
+}

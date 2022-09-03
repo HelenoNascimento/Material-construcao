@@ -22,6 +22,10 @@ display: none !important;
   display: none !important;
   }
 
-  .hide-client{
+.hide-client{
     display: none !important;
-    }
+}
+
+.hide-vendas{
+  display: none !important;
+}

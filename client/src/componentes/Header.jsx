@@ -1,7 +1,7 @@
 import "./Header.css"
 import { NavLink, Link } from "react-router-dom";
 import { BiArchive } from "react-icons/bi";
-import { FcBusinessman, FcFilingCabinet, FcInTransit } from "react-icons/fc";
+import { FcBusinessman, FcCurrencyExchange, FcFilingCabinet, FcInTransit } from "react-icons/fc";
 const Header = () => {
   return (
     <header>
@@ -9,6 +9,9 @@ const Header = () => {
           <Link to="/">Material de construcao</Link>
           
           <ul id="nav-links">
+          <li>
+            <Link to="/vendas"> <i><FcCurrencyExchange /> </i>Vendas</Link>
+            </li>
           <li>
             <Link to="/cliente"> <i><FcBusinessman /> </i>Cliente</Link>
             </li>
