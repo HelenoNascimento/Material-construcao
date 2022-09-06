@@ -44,8 +44,19 @@ const getClientes = async(req, res)  =>{
  //  return produtos
 }
 
+  //PESQUISANDO CLIENTE POR ID
+  const getClientById = async(req, res) =>{
+    const { id } = req.body;
+   // console.log(id)
+        Cliente.findByPk(id)
+            .then((result) => {
+                res.json(result)
+            });
+      }
+
 
 module.exports ={
     register,
     getClientes,
+    getClientById,
 }

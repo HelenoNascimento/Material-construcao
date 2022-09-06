@@ -40,19 +40,19 @@
 
 
 .vendas-client{
-    margin-top: 2rem;
-    border: 1px solid rgb(196, 193, 193);
+    margin-top: 1.5rem;
+    border: 2px solid rgb(245, 240, 240);
     width: 90%;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    gap: 2rem;
-    flex-wrap: wrap;
+    height: auto;
+    margin-bottom: 1rem;
+   
 }
 .busca-client{
     width: 25%;
+}
+
+.busca-client .pesquisaForne{
+    width: 80%;
 }
 .dados-client{
     width: 70%;

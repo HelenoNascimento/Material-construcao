@@ -33,10 +33,22 @@ const cadastrarCliente = async (cliente) =>{
 
 }
 
+// pesquisando cliente por ID
+const getClientById = async(id)=>{
+    const res = await Axios.post(api +"/cliente/buscaId",{
+    id: id,
+}).then((response)=>{
+    //console.log(response.data)
+    return response.data;
+})
+return res
+}
+
 
 const ClienteService = {
     cadastrarCliente,
-    getAllClientes
+    getAllClientes,
+    getClientById
 }
 
 export default ClienteService

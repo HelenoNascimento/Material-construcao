@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const connection = require("../Database/database")
-
+const itemPedidos = require("../Pedidos/ItemPedidos");
+const Pedidos = require("../Pedidos/pedidos");
 
 const Cliente = connection.define("cliente",{
 
@@ -18,6 +19,19 @@ const Cliente = connection.define("cliente",{
     }
 
 })
+
+
+
+/*
+Produto.belongsTo(Fornecedor,{
+    constraint: true,
+    foreignKey: 'idFornecedor'
+})
+
+Fornecedor.hasMany(Produto,{
+    foreignKey: 'idFornecedor'
+})
+*/
 
 //Cliente.sync({force: true});
 

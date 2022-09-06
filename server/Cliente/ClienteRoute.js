@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, getClientes } = require("./ClienteController");
+const { register, getClientes, getClientById } = require("./ClienteController");
 const routerClient = express.Router();
 
 
@@ -10,5 +10,6 @@ const {clienteCreateValidation } = require("./ClienteValidations");
 //rotas
 routerClient.post("/cliente/register",clienteCreateValidation(), register);
 routerClient.get("/cliente",getClientes);
+routerClient.post("/cliente/buscaId",getClientById);
 
 module.exports = routerClient

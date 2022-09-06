@@ -1,0 +1,9 @@
+.icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icons i {
+    font-size: 1.6rem;
+    cursor: pointer;
+}

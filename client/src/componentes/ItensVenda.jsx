@@ -1,10 +1,11 @@
 import React from 'react'
 import { useEffect } from 'react'
+import { FcCancel } from 'react-icons/fc'
 
 import "./ItensVenda.css"
 
 const ItensVenda = (vendas) => {
-    console.log(vendas.vendas)
+  console.log(vendas.vendas)
   
   return (
     <div>
@@ -13,25 +14,29 @@ const ItensVenda = (vendas) => {
                         <table >
                           <thead>
                             <tr>
-                            <th>Cliente</th> 
+                         
                             <th>Produto</th> 
                             <th>Quantidade</th>
+                            <th>Valor unitario</th> 
+                            <th>Valor total</th> 
                         
                           
-                            <th>Açoes</th>
+                            <th>Remover</th>
                             </tr>
                           
                             </thead>
                             <tbody>
                               {vendas.vendas.map(produto => (<tr key={produto.produto}>
-                                <td> {produto.cliente}</td>
+                                
                                 <td> {produto.produto}</td>
                                 <td> {produto.quantidade} </td>
+                                <td> R$: {produto.valor} </td>
+                                <td> R$: {produto.valor * produto.quantidade} </td>
                               
                               
                                 <td>
                                   <div className="icons">
-                                 
+                                  <i><FcCancel /></i>
                                   
                                   </div>
                                   
