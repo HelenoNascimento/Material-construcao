@@ -1,4 +1,7 @@
 import React from 'react'
+import { FcViewDetails } from 'react-icons/fc'
+import { Link } from 'react-router-dom'
+import Pedido from '../pages/Pedido/Pedido'
 import "./Pedidos.css"
 const Pedidos = ({pedidos}) => {
 
@@ -6,6 +9,10 @@ const Pedidos = ({pedidos}) => {
             <h4>Nome: {pedido.cliente.nome}</h4>
             <h4>Total: {pedido.total}</h4>
             <h4>Data: {pedido.data}</h4>*/
+
+ const verPedido = () =>{
+    
+ }
   return (
     <div className='pedidos'>
         <div className="item-pedido">
@@ -34,7 +41,9 @@ const Pedidos = ({pedidos}) => {
                  
                   <td>
                     <div className="icons">
-                  
+                    
+                    <Link to={`/pedidos/${pedido.id}`}> <i><FcViewDetails /></i></Link>
+                   
                      
                     </div>
                      

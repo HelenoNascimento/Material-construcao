@@ -54,13 +54,23 @@ const getPedidos = async() =>{
     })
     return res
 }
+//Pesquisando pedido pelo ID
 
+const getPedidoID = async (id) => {
+
+    const pedido = await Axios.get(api + "/pedidos/"+id)
+        .then((response) =>{
+             return response.data
+            })
+        return pedido
+}
 
 const PedidoService = {
     novoPedido,
     novoItemPedido,
     ultimoPedido,
     getPedidos,
+    getPedidoID,
 }
 
 export default PedidoService

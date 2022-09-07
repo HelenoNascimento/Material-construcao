@@ -98,7 +98,7 @@ const registerNovoItem = async (req, res) =>{
   
   }
 
-  
+  //LISTANDO TODOS OS PEDIDOS
 const getAllPedidos = async(req, res)  =>{
     let produtos = {}
     Pedidos.findAll({
@@ -114,6 +114,20 @@ const getAllPedidos = async(req, res)  =>{
  //  return produtos
 }
 
+
+  //LISTANDO PEDIDO PELO ID
+  const getPedidoById = async(req, res)  =>{
+    const{id} = req.params;
+    Pedidos.findByPk(id,{
+        
+        include: [{model: Produto},{model: Cliente}]
+        
+    }).then(pedido =>{
+        res.send(pedido);
+    })
+   // console.log(produtos.fornecedor) 
+ //  return produtos
+}
       module.exports ={
         getPedido,
         getProdutosPedidos,
@@ -121,4 +135,5 @@ const getAllPedidos = async(req, res)  =>{
         registerNovoItem,
         getUltimoPedido,
         getAllPedidos,
+        getPedidoById,
     };

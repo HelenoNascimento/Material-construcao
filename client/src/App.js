@@ -11,6 +11,7 @@ import Modal from './componentes/Modal';
 import Fornecedor from './pages/Fornecedor/Fornecedor';
 import Cliente from './pages/Cliente/Cliente';
 import Vendas from './pages/Vendas/Vendas';
+import Pedido from './pages/Pedido/Pedido';
 
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/fornecedor" element={<Fornecedor />}/>
           <Route path="/cliente" element={<Cliente />}/>
           <Route path="/vendas" element={<Vendas />}/>
+          <Route path="/pedidos/:id" element={<Pedido />}/>
         </Routes>
         </main>
       <Footer />
