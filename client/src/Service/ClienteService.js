@@ -44,11 +44,23 @@ const getClientById = async(id)=>{
 return res
 }
 
+//pesquisando todos os pedidos
+
+const getPedidos = async() =>{
+    const res = await Axios.get(api + "/pedidos/all",{
+
+    }).then((response)=> {
+        return response.data
+    })
+    return res
+}
+
 
 const ClienteService = {
     cadastrarCliente,
     getAllClientes,
-    getClientById
+    getClientById,
+    getPedidos,
 }
 
 export default ClienteService

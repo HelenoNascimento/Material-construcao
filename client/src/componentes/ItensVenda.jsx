@@ -5,7 +5,7 @@ import { FcCancel } from 'react-icons/fc'
 import "./ItensVenda.css"
 
 const ItensVenda = (vendas) => {
-  console.log(vendas.vendas)
+
   
   return (
     <div>

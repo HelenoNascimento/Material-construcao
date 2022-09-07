@@ -36,7 +36,21 @@ const Op = Sequelize.Op;              // biblioteca de operadores
         });
       }
 
-      // cadastrando um pedido
+          //PESQUISANDO ULTIMO PEDIDO *********************************
+  const getUltimoPedido = async(req, res) =>{
+   
+    Pedidos.findAll({
+        limit: 1,
+        order:[
+            ['id', 'DESC']
+        ] 
+    })
+        .then((result) => {
+            res.json(result)
+        });
+      }
+
+      // cadastrando um pedido *************************************
 const registerPedido = async (req, res) =>{
 
   //const { idCliente, total_pedido, data, quantidade, valor, Id_produto, id_pedido } = req.body;
@@ -84,9 +98,27 @@ const registerNovoItem = async (req, res) =>{
   
   }
 
+  
+const getAllPedidos = async(req, res)  =>{
+    let produtos = {}
+    Pedidos.findAll({
+        order:[
+            ['id', 'DESC']
+        ],
+        include: [{model: Produto},{model: Cliente}]
+        
+    }).then(produtos =>{
+        res.send(produtos);
+    })
+   // console.log(produtos.fornecedor) 
+ //  return produtos
+}
+
       module.exports ={
         getPedido,
         getProdutosPedidos,
         registerPedido,
         registerNovoItem,
+        getUltimoPedido,
+        getAllPedidos,
     };

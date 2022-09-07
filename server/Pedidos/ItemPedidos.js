@@ -5,6 +5,8 @@ const Produto = require("../Produto/Produto")
 
 //connection.sync()
 const ItemPedidos = connection.define("ItemPedidos",{
+    
+
     quantidade:{
         type: Sequelize.FLOAT,
         allowNull: false

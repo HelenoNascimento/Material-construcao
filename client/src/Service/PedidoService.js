@@ -18,11 +18,11 @@ const novoPedido = async (pedido) =>{
 }
 
 const novoItemPedido = async (item) =>{
-    Axios.post(api+"/pedidos/novoItem",{
+    Axios.post(api+"/pedidos/novoItemPedido",{
         quantidade: item.quantidade,
         valor_item: item.valor_item,
-        idProduto: item.id_Produto,
-        idPedido:  item.id_Pedido,
+        idProduto: item.idProduto,
+        idPedido:  item.idPedido,
         
     }).then((response) =>{
         console.log(response);
@@ -33,11 +33,34 @@ const novoItemPedido = async (item) =>{
       });
 }
 
+//PESQUISANDO ULTIMO PEDIDO
+
+const ultimoPedido = async ()=>{
+   const ultimo = await Axios.get(api +"/pedidos/ultimo",{
+
+    }).then((response)=>{
+        //console.log(response.data)
+        return response.data;
+    })
+    return ultimo
+}
+//pesquisando todos os pedidos
+
+const getPedidos = async() =>{
+    const res = await Axios.get(api + "/pedidos/all",{
+
+    }).then((response)=> {
+        return response.data
+    })
+    return res
+}
 
 
 const PedidoService = {
     novoPedido,
     novoItemPedido,
+    ultimoPedido,
+    getPedidos,
 }
 
 export default PedidoService

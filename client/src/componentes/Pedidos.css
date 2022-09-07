@@ -1,0 +1,15 @@
+.pedidos{
+    width: 100%;
+    height: auto;
+    
+    border-bottom: 1px solid rgb(202, 202, 202);
+    
+}
+
+.item-pedido{
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    
+}

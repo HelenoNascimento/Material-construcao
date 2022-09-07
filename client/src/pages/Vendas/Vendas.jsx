@@ -7,6 +7,7 @@ import PedidoService from '../../Service/PedidoService';
 import Cliente from '../Cliente/Cliente';
 import "./Vendas.css"
 import Select from 'react-select'
+import Pedidos from '../../componentes/Pedidos';
 
 
 const closeModal = ()=>{
@@ -29,6 +30,7 @@ const [listaCli, setlistaCli] = useState("");
 
 //dados produto
 const [ nomePro, setNomePro] = useState("") 
+const [ idPro, setIdPro] = useState("")
 const [ descricao, setDescricao] = useState("")
 const [ valor, setValor] = useState("")
 const [quantidadePro ,setQuantidadePro] = useState("")
@@ -42,6 +44,12 @@ const  [vendas,setVendas] = useState([]);
 const  [novoPedido, setNovoPedido] = useState(true);
 
 
+//ultimo pedido
+const [ultimoPedido, setUltimoPedido] = useState("");
+const [ultimoPed, setUltimoPed] = useState(false);
+
+const [todosPedidos, setTodosPedidos] = useState({})
+
 let qnt = 0;
 
 const listaC = [];
@@ -54,11 +62,14 @@ useEffect(() => {
  setListaClientes(client)
  setlistaCli(client)
  setListaProdutos(prod)
+ const todosPedidos = await PedidoService.getPedidos();
+setTodosPedidos(todosPedidos)
 
 }
 
 //setLoading(false)
 loadAll();
+
 },[]) 
 
 useEffect(() => {
@@ -67,12 +78,14 @@ useEffect(() => {
   //const client= await ClienteService.getAllClientes();
  //setListaClientes(client)
 // setListaProdutos(prod)
+
+setIdPro(produtoID[0].id)
 setNomePro(produtoID[0].nome)
 setQuantidadePro(produtoID[0].quantidade)
 setDescricao(produtoID[0].descricao)
 setValor(produtoID[0].valor)
-
-console.log(produtoID[0].nome);
+/// carrega produto pelo ID
+//console.log(produtoID[0].nome);
   }
 
   loadAll2();
@@ -82,16 +95,28 @@ console.log(produtoID[0].nome);
 useEffect(() => {
   const loadcliente = async () =>{
  const clienteID = await ClienteService.getClientById(cliente);
-  
+  const todosPedidos = await PedidoService.getPedidos();
+  setTodosPedidos(todosPedidos)
+ // console.log(todosPedidos)
   setNome(clienteID.nome)
   setEndereco(clienteID.endereco)
   setTelefone(clienteID.telefone)
   setIdCliente(clienteID.idCliente) 
-  console.log(clienteID);
+  //console.log(clienteID);
   }
   loadcliente();
 },[cliente]) 
 
+
+// **********************carrega ultimo pedido ********************
+useEffect(() => {
+  const loadUltimoPedido = async () =>{
+        const ultimo = await PedidoService.ultimoPedido();
+        setUltimoPedido(ultimo[0].id)
+  }
+  loadUltimoPedido();
+},[ultimoPed]) 
+//console.log(ultimoPedido)
 
 //console.log(listaClientes)
 //console.log(lsitaProdutos)
@@ -104,10 +129,28 @@ const handleVendas = (e) =>{
       total: 0,
       data: "25/05/2015"
     }
+    setUltimoPed(true)
+    setNovoPedido(false)
   
-    console.log(pedido)
-    PedidoService.novoPedido(pedido)
+    //console.log(pedido)
+    PedidoService.novoPedido(pedido) 
+   // ultimoPedido(PedidoService.ultimoPedido());
+
+    console.log("Ultimo")
+    //console.log(ultimoPedido)
   }
+  console.log("Ultimo")
+  console.log(ultimoPedido)
+  if(ultimoPedido === undefined){
+    setUltimoPedido(1)
+  }
+  const novoItemPedido = {
+      quantidade: quantidade,
+      valor_item: valor,
+      idProduto: idPro,
+      idPedido: ultimoPedido+1
+  }
+  PedidoService.novoItemPedido(novoItemPedido);
  
   setVendas([...vendas,{
     idClient: cliente, 
@@ -119,9 +162,9 @@ const handleVendas = (e) =>{
   }])
   qnt ++
 
-setNovoPedido(false)
-setTeste(true)
 
+setTeste(true)
+setUltimoPed(false)
 
 }
 //console.log(vendas)
@@ -136,7 +179,8 @@ if(listaCli){
      cont ++
    });
   }
- 
+  console.log("aa")
+ console.log(todosPedidos)
 
 const hideOrShowModal = (display) =>{
   const modal = document.querySelector('#modal-vendas');
@@ -153,9 +197,14 @@ const abrirModal = (produto) =>{
    
  }
 
+ if(!todosPedidos){
+  return <p>carregando</p>
+ }
+
 
   return (
     <div className='vendas-container'>
+      
       <div className="row"> 
         <button onClick={abrirModal}>Vender</button>
       </div>
@@ -232,7 +281,24 @@ const abrirModal = (produto) =>{
             </div>
             
         </div>
+        <div className='pedidos'>
+       
+        {todosPedidos.length >0 ?(
+       
+            <>
+            <Pedidos pedidos={todosPedidos}/>
+            
+          </>
+         
+        ) :(<>
+        <p>Ainda não tem nenhuma venda :c</p>
         
+        </>)}
+
+       
+        
+
+        </div>
     </div>
   )
 }
