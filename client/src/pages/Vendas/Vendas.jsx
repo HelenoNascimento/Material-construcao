@@ -4,6 +4,7 @@ import ItensVenda from '../../componentes/ItensVenda';
 import ClienteService from '../../Service/ClienteService';
 import ProdutoService from '../../Service/ProdutoService';
 import PedidoService from '../../Service/PedidoService';
+import { FcCancel } from 'react-icons/fc'
 import Cliente from '../Cliente/Cliente';
 import "./Vendas.css"
 import Select from 'react-select'
@@ -17,6 +18,10 @@ const closeModal = ()=>{
 
 
 const Vendas = () => {
+
+  //recarregar vendas
+const[recarregar, setRecarregar] = useState(false)
+
 //produtos e clientes
 const[lsitaProdutos,setListaProdutos] =  useState("")
 const[listaClientes,setListaClientes] = useState("");
@@ -35,74 +40,75 @@ const [ descricao, setDescricao] = useState("")
 const [ valor, setValor] = useState("")
 const [quantidadePro ,setQuantidadePro] = useState("")
 
-const [teste, setTeste] = useState(false)
+
 const [produto, setProduto] = useState("");
 const [quantidade, setQuantidade] = useState("");
 const [cliente, setCliente] = useState("");
 
 const  [vendas,setVendas] = useState([]);
 const  [novoPedido, setNovoPedido] = useState(true);
+const [ totalPedido, setTotalPedido] = useState("");
 
 
-//ultimo pedido
+//dados pedido
 const [ultimoPedido, setUltimoPedido] = useState("");
 const [ultimoPed, setUltimoPed] = useState(false);
-
+const [controlaTotal, setControlaTotal] = useState(false);
 const [todosPedidos, setTodosPedidos] = useState({})
 
-let qnt = 0;
+
+//dados do pedid
+  const [itemPedido, setItemPedido] = useState([]);
+
+
 
 const listaC = [];
+
+//carrega dados
 useEffect(() => {
-
-
   const loadAll = async () =>{
-  const prod = await ProdutoService.getAllProdutos();
-  const client= await ClienteService.getAllClientes();
- setListaClientes(client)
- setlistaCli(client)
- setListaProdutos(prod)
- const todosPedidos = await PedidoService.getPedidos();
-setTodosPedidos(todosPedidos)
+            const prod = await ProdutoService.getAllProdutos();
+            const client= await ClienteService.getAllClientes();
+          setListaClientes(client)
+          setlistaCli(client)
+          setListaProdutos(prod)
+          const todosPedidos = await PedidoService.getPedidos();
+          setTodosPedidos(todosPedidos)
 
-}
-
-//setLoading(false)
-loadAll();
-
-},[]) 
+    }
+  loadAll();
+  },[recarregar]) 
 
 useEffect(() => {
   const loadAll2 = async () =>{
   const produtoID = await ProdutoService.getProdutoById(produto);
-  //const client= await ClienteService.getAllClientes();
- //setListaClientes(client)
-// setListaProdutos(prod)
+
 
 setIdPro(produtoID[0].id)
 setNomePro(produtoID[0].nome)
 setQuantidadePro(produtoID[0].quantidade)
 setDescricao(produtoID[0].descricao)
 setValor(produtoID[0].valor)
-/// carrega produto pelo ID
-//console.log(produtoID[0].nome);
+
   }
 
   loadAll2();
  
 },[produto]) 
 
+
+//*****************Carrega dados do cliente*************** */
 useEffect(() => {
   const loadcliente = async () =>{
  const clienteID = await ClienteService.getClientById(cliente);
   const todosPedidos = await PedidoService.getPedidos();
   setTodosPedidos(todosPedidos)
- // console.log(todosPedidos)
+
   setNome(clienteID.nome)
   setEndereco(clienteID.endereco)
   setTelefone(clienteID.telefone)
   setIdCliente(clienteID.idCliente) 
-  //console.log(clienteID);
+
   }
   loadcliente();
 },[cliente]) 
@@ -116,56 +122,112 @@ useEffect(() => {
   }
   loadUltimoPedido();
 },[ultimoPed]) 
-//console.log(ultimoPedido)
 
-//console.log(listaClientes)
-//console.log(lsitaProdutos)
+const loadUltimoPedido = async () =>{
+  const ultimo = await PedidoService.ultimoPedido();
+  return ultimo
+  }
 
 const handleVendas = (e) =>{
 
-  if(novoPedido){
-    const pedido = {
-      idClient: cliente,
-      total: 0,
-      data: "25/05/2015"
-    }
-    setUltimoPed(true)
-    setNovoPedido(false)
-  
-    //console.log(pedido)
-    PedidoService.novoPedido(pedido) 
-   // ultimoPedido(PedidoService.ultimoPedido());
-
-    console.log("Ultimo")
-    //console.log(ultimoPedido)
-  }
-  console.log("Ultimo")
-  console.log(ultimoPedido)
-  if(ultimoPedido === undefined){
-    setUltimoPedido(1)
-  }
-  const novoItemPedido = {
-      quantidade: quantidade,
+  setItemPedido([...itemPedido,{
+    quantidade: quantidade,
       valor_item: valor,
       idProduto: idPro,
       idPedido: ultimoPedido+1
-  }
-  PedidoService.novoItemPedido(novoItemPedido);
- 
+  }])
+ // PedidoService.novoItemPedido(novoItemPedido);
+ let controleItemVenda = 0;
+
+ const novoItemVenda = vendas.map((item, index, array) => {
+  
+ if(item.idProduto == produto){
+  item.quantidade = parseInt(item.quantidade) + parseInt(quantidade)
+  item.totalDoItem= parseInt(item.quantidade) * parseInt(item.valor)
+  console.log("entrou aqui")
+  setControlaTotal(true)
+  atualizaTotal();
+  controleItemVenda = 1
+  return
+
+ }
+
+  
+})
+if(controleItemVenda ===0 ){
   setVendas([...vendas,{
+    idProduto: idPro,
     idClient: cliente, 
     nome: nome, 
     produto: nomePro, 
     valor: valor, 
-    quantidade: quantidade
+    quantidade: quantidade,
+    totalDoItem: valor * quantidade
     
   }])
-  qnt ++
+  //setTotalPedido(totalPedido+= (quantidade*valor))
+}
 
 
-setTeste(true)
+
 setUltimoPed(false)
+setControlaTotal(false)
+}
+//**********************Atualiza total do pedido **************** */
+const atualizaTotal = () =>{
+  let total = 0
+  vendas.forEach(item =>{
+    total += item.totalDoItem
+   
+  })
+  setTotalPedido(total)
+}
+useEffect(() =>{
+  let total = 0
+  vendas.forEach(item =>{
+    total += item.totalDoItem
+    console.log(item)
+  })
+  setTotalPedido(total)
+},[vendas,controlaTotal])
 
+//***************deletando item da  a Venda ****************** */
+
+const handleDelete = (id) =>{
+  console.log(id)
+   setVendas(vendas.filter((item) => item.idProduto !== id));
+   console.log(vendas)
+   id = 0
+  
+}
+
+//***************Realizado a venda item da  a Venda ****************** */
+const handleFinalizar =() =>{
+  console.log(itemPedido)
+
+    const pedido = {
+      idClient: cliente,
+      total: totalPedido,
+      data: "25/05/2015"
+    }
+
+    
+    //console.log(pedido)
+   PedidoService.novoPedido(pedido) 
+   
+    
+console.log(ultimoPedido)
+  vendas.forEach(item => {
+    const novoItemPedido = {
+      quantidade: item.quantidade,
+      valor_item: item.valor,
+      idProduto: item.idProduto,
+      idPedido: ultimoPedido+1
+  }
+  PedidoService.novoItemPedido(novoItemPedido);
+  })
+  setRecarregar(true)
+  closeModal()
 }
 //console.log(vendas)
 
@@ -179,8 +241,10 @@ if(listaCli){
      cont ++
    });
   }
-  console.log("aa")
+  console.log(vendas)
  console.log(todosPedidos)
+
+ // *****************controla modal ******
 
 const hideOrShowModal = (display) =>{
   const modal = document.querySelector('#modal-vendas');
@@ -263,21 +327,67 @@ const abrirModal = (produto) =>{
                         <label>Quantidade</label>
                         <input type="text" placeholder="Quantidade" className="input-numerico" onChange={(e) => setQuantidade(e.target.value)}/>
                         <button onClick={handleVendas}>Adicionar</button>
+
+                        <span>Total Pedido</span>
+                        <input type="text" placeholder="Total Pedido" className="input-numerico" disabled value={totalPedido || ""}/>
                       </div>
 
                       <div className="row-lista-vendas">
 
                         {vendas && 
-                            <ItensVenda vendas={vendas} key={vendas.produto}/>
+                           <div>
+                           <h1>{vendas.cliente}</h1>
+                           {vendas ?( 
+                                           <table >
+                                             <thead>
+                                               <tr>
+                                            
+                                               <th>Produto</th> 
+                                               <th>Quantidade</th>
+                                               <th>Valor unitario</th> 
+                                               <th>Valor total</th> 
+                                           
+                                             
+                                               <th>Remover</th>
+                                               </tr>
+                                             
+                                               </thead>
+                                               <tbody>
+                                                 {vendas.map(produto => (<tr key={produto.produto}>
+                                                   
+                                                   <td> {produto.produto}</td>
+                                                   <td> {produto.quantidade} </td>
+                                                   <td> R$: {produto.valor} </td>
+                                                   <td> R$: {produto.valor * produto.quantidade} </td>
+                                                 
+                                                 
+                                                   <td>
+                                                     <div className="icons">
+                                                     <i onClick={() => {handleDelete(produto.idProduto)}}><FcCancel /></i>
+                                                     
+                                                     </div>
+                                                     
+                                                   </td>
+                                                 
+                                                 </tr>))}
+                                   
+                                               </tbody>
+                                             
+                                               
+                                               </table>
+                                         ): (
+                                       <p>Não foi encontrado esse produto </p>
+                                     )}
+                       </div>
                         }
                         
                       
                       
 
                       </div>
-
+                     
                 </div>
-                
+                <button onClick={handleFinalizar}>Finalizar Venda</button>
             </div>
             
         </div>

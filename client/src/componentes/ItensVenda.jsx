@@ -4,7 +4,10 @@ import { FcCancel } from 'react-icons/fc'
 
 import "./ItensVenda.css"
 
-const ItensVenda = (vendas) => {
+const ItensVenda = (vendas,handleDelete,props) => {
+
+      
+
 
   
   return (
@@ -36,7 +39,7 @@ const ItensVenda = (vendas) => {
                               
                                 <td>
                                   <div className="icons">
-                                  <i><FcCancel /></i>
+                                  <i onClick={() => {handleDelete(produto.idProduto)}}><FcCancel /></i>
                                   
                                   </div>
                                   

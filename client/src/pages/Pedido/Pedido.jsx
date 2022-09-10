@@ -53,48 +53,33 @@ useEffect(() => {
                 {pedido.Produtos.length >0 ?( 
            <table >
             <thead>
-              <tr>
-              <th>Codigo Produto</th> 
-         
-              <th>Total do pedido</th>
-              <th>Valor venda</th>
-             
-              <th>Quantidade</th>
-              </tr>
-             
+                <tr>
+                    <th>Codigo Produto</th> 
+                    <th>Total do pedido</th>
+                    <th>Valor venda</th>
+                    <th>Quantidade</th>
+                </tr>  
               </thead>
               <tbody>
-                {pedido.Produtos.map(pd => (<tr key={pd.id}>
-                  <td> {pd.id}</td>
-                  
-                  <td> {pd.nome} </td>
-                  <td> R$ {pd.valor} </td>
-                  <td> {pd.ItemPedidos.quantidade} </td>
-                 
-                 
-                
-                </tr>))}
-  
+                {pedido.Produtos.map(pd => (
+                    <tr key={pd.id}>
+                        <td> {pd.id}</td>
+                        <td> {pd.nome} </td>
+                        <td> R$ {pd.valor} </td>
+                        <td> {pd.ItemPedidos.quantidade} </td>
+                    </tr>))}
               </tbody>
-             
-              
+
               </table>
         ): (
       <p>Não foi encontrado esse produto </p>
     )}
-
-
         </div>
         </>) : (<>
-        <p>Sem pedido</p>
-        </>)
-        
-        
-        }
-       
-        
+             <p>Sem pedido</p>
+        </>) }
 
-    </div>
+      </div>
   )
 }
 
