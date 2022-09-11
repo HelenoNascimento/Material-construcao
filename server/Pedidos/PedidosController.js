@@ -6,6 +6,7 @@ const router = express.Router();
 const Sequelize = require("sequelize");
 const Cliente = require("../Cliente/Cliente");
 const Produto = require("../Produto/Produto");
+const ProdutoController = require("../Produto/ProdutoController");
 const ItemPedidos = require("./ItemPedidos");
 const Pedidos = require("./pedidos");
 const Op = Sequelize.Op;              // biblioteca de operadores
@@ -13,17 +14,30 @@ const Op = Sequelize.Op;              // biblioteca de operadores
   //PESQUISANDO UM PEDIDO
   const getPedido = async(req, res) =>{
     const { id } = req.body;
+    const query = `%${id}%`; // string de consulta
     console.log(id)
-        Pedidos.findByPk(id,{include:{model: Cliente}})  .then((result) => {
+        Pedidos.findAll({
+            where: {id: { [Op.like]: query }},
+            include:[{model: Cliente}]})
+            
+            .then((result) => {
                 res.json(result)
             });
       }
+//PESQUISANDO PEDIDO POR NOME CLIENTE
 
-     
-      module.exports ={
-        getPedido,
-    };
-
+const getPedidoCliente = async(req, res) =>{
+    const {idCliente} = req.body;
+   // const query = `%${nome}%`;
+    Pedidos.findAll({
+       // where: {idCliente: { [Op.like]: query }},
+            where: {idCliente: idCliente},
+        include:[{model: Cliente}]
+    }).then((result) =>{
+        res.json(result)
+    })
+}
+    
      //PESQUISANDO UM PEDIDO
   const getProdutosPedidos = async(req, res) =>{
     const { id } = req.body;
@@ -83,14 +97,16 @@ const registerNovoItem = async (req, res) =>{
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array()})
     }
-  
+    const status = "saida";
+    ProdutoController.updateSaldoProduto(idProduto,quantidade,status)
     const novoItemPedido = await ItemPedidos.create({
         quantidade: quantidade,
         valor_item: valor_item,
         idProduto: idProduto,
-        idPedido:  idPedido,
+        idPedido:  idPedido
     }).then(() =>{
-        res.status(200).json({ ItemPedidos, message: "Item Adicionado com sucesso!" });
+       
+       // res.status(200).json({ ItemPedidos, message: "Item Adicionado com sucesso!" });
         
     }).catch((error) =>{
         console.log(error);
@@ -136,4 +152,5 @@ const getAllPedidos = async(req, res)  =>{
         getUltimoPedido,
         getAllPedidos,
         getPedidoById,
+        getPedidoCliente
     };

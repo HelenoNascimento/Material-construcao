@@ -53,10 +53,21 @@ const getClientes = async(req, res)  =>{
                 res.json(result)
             });
       }
+      // PESQUISANDO CLIENTE PELO NOME
+      const getClienteByNome = async(req, res) =>{
+        const{ nome } = req.body;
+        const query = `%${nome}%`;
+        Cliente.findAll({
+            where: {nome: { [Op.like]: query }}
+        }).then((result) => {
+                res.json(result)
+            });
 
+      }
 
 module.exports ={
     register,
     getClientes,
     getClientById,
+    getClienteByNome,
 }

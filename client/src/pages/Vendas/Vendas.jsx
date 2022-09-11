@@ -60,9 +60,13 @@ const [todosPedidos, setTodosPedidos] = useState({})
 //dados do pedid
   const [itemPedido, setItemPedido] = useState([]);
 
-
-
+// dados busca pedidos
+const [buscaIdPedido, setBuscaIdPedido] = useState();
+const [buscaNomePedido, setBuscaNomePedido] = useState();
+const [ idClientePedido, setIdClientePedido] = useState();
 const listaC = [];
+
+
 
 //carrega dados
 useEffect(() => {
@@ -72,12 +76,27 @@ useEffect(() => {
           setListaClientes(client)
           setlistaCli(client)
           setListaProdutos(prod)
-          const todosPedidos = await PedidoService.getPedidos();
+           
+           const todosPedidos = await PedidoService.getPedidos();
+          
           setTodosPedidos(todosPedidos)
 
     }
   loadAll();
   },[recarregar]) 
+
+
+  //carrega pedidos do ID
+useEffect(() => {
+  const carrePedidoID = async () =>{
+    const todosPedidos = await PedidoService.buscadoPedidoID(buscaIdPedido)
+    setTodosPedidos(todosPedidos);
+    console.log("aa")
+    console.log(todosPedidos)
+  }
+ 
+  carrePedidoID()
+},[buscaIdPedido])
 
 useEffect(() => {
   const loadAll2 = async () =>{
@@ -123,17 +142,47 @@ useEffect(() => {
   loadUltimoPedido();
 },[ultimoPed]) 
 
+//**************************carrega pedidos por nome cliente ***************** */
+useEffect(()=>{
+  
+  const loadPedidoCliente = async () =>{
+      if(buscaNomePedido != ""){
+        const cliente = await ClienteService.getClienteNome(buscaNomePedido)
+        const idCliente = cliente[0].id
+         setIdClientePedido(idCliente)
+         console.log(cliente)
+         console.log(idCliente)
+      }
+     
+  }
+loadPedidoCliente();
+},[buscaNomePedido])
+  useEffect(()=> {
+        const loadPedidoCliente2 = async() =>{
+          if(idClientePedido != undefined){
+            const pedidosCliente = await PedidoService.buscaPedidoCliente(idClientePedido);
+
+          if(pedidosCliente){
+            setTodosPedidos(pedidosCliente) 
+            }
+        }
+     }
+  loadPedidoCliente2();
+  },[idClientePedido])
+
+//****busca ultimo pedido */
 const loadUltimoPedido = async () =>{
   const ultimo = await PedidoService.ultimoPedido();
   return ultimo
   }
 
+  /// Adiciona item na venda ****************
 const handleVendas = (e) =>{
 
   setItemPedido([...itemPedido,{
     quantidade: quantidade,
       valor_item: valor,
-      idProduto: idPro,
+      idProduto: produto,
       idPedido: ultimoPedido+1
   }])
  // PedidoService.novoItemPedido(novoItemPedido);
@@ -156,7 +205,7 @@ const handleVendas = (e) =>{
 })
 if(controleItemVenda ===0 ){
   setVendas([...vendas,{
-    idProduto: idPro,
+    idProduto: produto,
     idClient: cliente, 
     nome: nome, 
     produto: nomePro, 
@@ -270,6 +319,10 @@ const abrirModal = (produto) =>{
     <div className='vendas-container'>
       
       <div className="row"> 
+        <span>Numero pedido</span>
+    <input type="text" placeholder="Numero pedido"  onChange={(e) => setBuscaIdPedido(e.target.value)} />
+        <span>Cliente</span>
+        <input type="text" placeholder="Cliente" onChange={(e) => setBuscaNomePedido(e.target.value)}/>
         <button onClick={abrirModal}>Vender</button>
       </div>
         <div id="modal-vendas" className="hide-vendas">

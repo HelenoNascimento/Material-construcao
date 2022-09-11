@@ -130,3 +130,12 @@
 .row-adicionar button{
     margin-top: 0.5rem;
 }
+.row{
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-start;
+}
+.row span{
+    margin-top: 0.5rem;
+    margin-left: 5rem;
+}

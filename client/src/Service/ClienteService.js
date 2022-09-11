@@ -55,12 +55,23 @@ const getPedidos = async() =>{
     return res
 }
 
+//BUSCA CLIENTE PELO NOME
+const getClienteNome  = async(nome) => {
+    const res = await Axios.post(api + "/cliente/buscaNome",{
+        nome: nome,
+    }).then((response)=> {
+        return response.data
+    })
+    return res
+}
+
 
 const ClienteService = {
     cadastrarCliente,
     getAllClientes,
     getClientById,
     getPedidos,
+    getClienteNome,
 }
 
 export default ClienteService

@@ -48,7 +48,7 @@ const ultimoPedido = async ()=>{
 
 const getPedidos = async() =>{
     const res = await Axios.get(api + "/pedidos/all",{
-
+    
     }).then((response)=> {
         return response.data
     })
@@ -65,12 +65,37 @@ const getPedidoID = async (id) => {
         return pedido
 }
 
+//Pesquisando pedido pelo ID
+
+const buscadoPedidoID = async (id) => {
+
+    const pedido = await Axios.post(api + "/pedidos",{
+        id:id
+    }).then((response) =>{
+             return response.data
+            })
+        return pedido
+}
+
+//Pesquisando pedidos dos clientes
+
+const buscaPedidoCliente = async(idCliente) =>{
+    const pedido = await Axios.post(api+ "/pedidos/getCliente",{
+        idCliente:idCliente
+    }).then((response) =>{
+        return response.data
+    })
+    return pedido
+}
+
 const PedidoService = {
     novoPedido,
     novoItemPedido,
     ultimoPedido,
     getPedidos,
     getPedidoID,
+    buscadoPedidoID,
+    buscaPedidoCliente,
 }
 
 export default PedidoService

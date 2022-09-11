@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, getClientes, getClientById } = require("./ClienteController");
+const { register, getClientes, getClientById, getClienteByNome } = require("./ClienteController");
 const routerClient = express.Router();
 
 
@@ -11,5 +11,6 @@ const {clienteCreateValidation } = require("./ClienteValidations");
 routerClient.post("/cliente/register",clienteCreateValidation(), register);
 routerClient.get("/cliente",getClientes);
 routerClient.post("/cliente/buscaId",getClientById);
+routerClient.post("/cliente/buscaNome",getClienteByNome)
 
 module.exports = routerClient

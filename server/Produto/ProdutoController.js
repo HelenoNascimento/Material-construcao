@@ -136,7 +136,31 @@ const pesquisaUmProduto = async(req, res) =>{
                     res.status(200).json({  message: "Produto Atualizado com sucesso!" });
                 })
       }
+//atualizando Saldo produto
 
+       // const updateSaldoProduto = async(req, res) =>{
+    //const updateSaldoProduto = async(idProduto, quantidade) =>{
+    //req, res
+    const updateSaldoProduto = async(idProduto, quantidade,status) =>{
+   // const { idProduto, quantidade, status} = req.body;
+  const produto =  await Produto.findByPk(idProduto)
+        let newquantidade = 0;
+        if(status == "entrada"){
+             newquantidade = (parseInt(produto.quantidade) + parseInt(quantidade))
+        }else if(status == "saida"){
+             newquantidade = (parseInt(produto.quantidade) - parseInt(quantidade))
+        }
+   
+    Produto.update(
+        {
+            quantidade: newquantidade},{
+                where: {
+                    id: idProduto
+                }
+            }).then(() =>{
+                //res.status(200).json({  message: "Saldo produto Atualizado com sucesso!" });
+            })
+  }
 module.exports ={
     register,
     getProdutos,
@@ -145,5 +169,6 @@ module.exports ={
     pesquisaUmProduto,
     updateProduto,
     pesquisaProdutoID,
-    pesquisaProdutoFornecedor
+    pesquisaProdutoFornecedor,
+    updateSaldoProduto
 };
