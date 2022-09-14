@@ -1,4 +1,6 @@
 const Sequelize = require("sequelize");
+const Compras = require("../Compras/Compras");
+const ItemCompra = require("../Compras/ItemCompra");
 const connection = require("../Database/database")
 const Fornecedor = require("../Fornecedor/Fornecedor");
 const ItemPedidos = require("../Pedidos/ItemPedidos");
@@ -39,6 +41,8 @@ Produto.belongsTo(Fornecedor,{
 Fornecedor.hasMany(Produto,{
     foreignKey: 'idFornecedor'
 })
+
+// relacionamento com pedidos
 Produto.belongsToMany(Pedidos,{
     through:{
         model: ItemPedidos
@@ -56,9 +60,24 @@ Pedidos.belongsToMany(Produto,{
    constraint: true
 })
 
+// relacionamento com compras
+Produto.belongsToMany(Compras,{
+    through:{
+        model: ItemCompra
+    },
+    foreignKey: 'idProduto',
+    constraints: true
+})
+Compras.belongsToMany(Produto,{
+    through:{
+        model: ItemCompra
+    },
+    foreignKey: "idCompra",
+   constraint: true
+})
 
 //Fornecedor.hasMany(Produto) //um fornecedor tem muitos produtos
 //Produto.belongsTo(Fornecedor) //um Produto tem um fornecedor
 //Produto.sync({force: true});
-//connection.sync()
+Produto.sync()
 module.exports = Produto;

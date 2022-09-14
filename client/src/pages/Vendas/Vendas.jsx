@@ -9,7 +9,7 @@ import Cliente from '../Cliente/Cliente';
 import "./Vendas.css"
 import Select from 'react-select'
 import Pedidos from '../../componentes/Pedidos';
-
+const today = new Date();
 
 const closeModal = ()=>{
   const modal = document.querySelector('#modal-vendas');
@@ -257,7 +257,7 @@ const handleFinalizar =() =>{
     const pedido = {
       idClient: cliente,
       total: totalPedido,
-      data: "25/05/2015"
+      data: today.toLocaleDateString()
     }
 
     

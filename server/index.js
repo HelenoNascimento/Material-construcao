@@ -4,6 +4,7 @@ const connection = require("./Database/database")
 const cors =require("cors");
 
 const Pedidos = require("./Pedidos/Pedidos")
+const Compras = require("./Compras/Compras")
 const ItemPedidos = require("./Pedidos/ItemPedidos")
 const Produto = require("./Produto/Produto")
 const Clientes = require("./Cliente/Cliente")
@@ -19,8 +20,10 @@ const Clientes = require("./Cliente/Cliente")
     const routerForne = require("./Fornecedor/FornecedorRoute");
     const routerClient = require("./Cliente/ClienteRoute");
     const routerPedido = require("./Pedidos/PedidoRoute")
+    const routerCompra = require("./Compras/ComprasRouter");
 const Cliente = require('./Cliente/Cliente');
     
+    app.use(routerCompra);
     app.use(routerClient);
     app.use(routerProdu);
     app.use(routerForne);
@@ -76,6 +79,7 @@ const pedidos = Pedidos.findByPk(1,{
 //database
 //connection.sync()
 //connection.sync({force: true});
+connection.sync()
 connection
     .authenticate()
     .then(() =>{
