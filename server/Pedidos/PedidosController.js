@@ -64,6 +64,20 @@ const getPedidoCliente = async(req, res) =>{
         });
       }
 
+      //PESQUISANDO AS ULTIMAS 5 VENDAS
+      const getUltimasVendas = async(req, res) =>{
+        Pedidos.findAll({
+            limit:4,
+            order:[
+                ['id', 'DESC']
+            ],
+            include: [{model: Produto},{model: Cliente}]
+            
+        }).then(produtos =>{
+            res.send(produtos);
+        })
+      }
+
       // cadastrando um pedido *************************************
 const registerPedido = async (req, res) =>{
 
@@ -152,5 +166,6 @@ const getAllPedidos = async(req, res)  =>{
         getUltimoPedido,
         getAllPedidos,
         getPedidoById,
-        getPedidoCliente
+        getPedidoCliente,
+        getUltimasVendas,
     };

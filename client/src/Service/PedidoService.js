@@ -88,6 +88,17 @@ const buscaPedidoCliente = async(idCliente) =>{
     return pedido
 }
 
+//Pesquisando as ultimas 5 vendas
+
+const getUltimasVendas = async() =>{
+    const vendas = await Axios.get(api+ "/pedidos/getUltimosPedidos",{})
+        .then((response) =>{
+            return response.data
+        })
+    return vendas
+    
+}
+
 const PedidoService = {
     novoPedido,
     novoItemPedido,
@@ -96,6 +107,7 @@ const PedidoService = {
     getPedidoID,
     buscadoPedidoID,
     buscaPedidoCliente,
+    getUltimasVendas,
 }
 
 export default PedidoService
