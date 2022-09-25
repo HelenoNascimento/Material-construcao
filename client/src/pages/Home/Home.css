@@ -40,6 +40,7 @@ main{
     box-shadow: 5px 5px 5px rgb(190, 189, 189);
     flex-direction: column;
     border-radius: 5px;
+  
 }
 .item span{
     font-size: 1.5rem;
@@ -94,4 +95,10 @@ main{
 .ultimas--vendas tr:hover{
     background-color: #a8a9aa;
     color: #fff;
+}
+
+.ultimas--vendas span{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: #807c7c;
 }

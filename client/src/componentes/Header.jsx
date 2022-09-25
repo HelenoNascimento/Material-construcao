@@ -10,6 +10,9 @@ const Header = () => {
           
           <ul id="nav-links">
           <li>
+            <Link to="/compras"> <i><FcCurrencyExchange /> </i>Compras</Link>
+            </li>
+          <li>
             <Link to="/vendas"> <i><FcCurrencyExchange /> </i>Vendas</Link>
             </li>
           <li>

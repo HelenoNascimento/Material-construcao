@@ -65,8 +65,18 @@ const updateFornecedor = async(req, res) =>{
             })
   }
 
+  ///busca fornecedor pelo ID
+  const getFornecedorById = (req, res) => {
+    const { id } = req.body;
+    Fornecedor.findByPk(id)
+    .then((result) => {
+        res.json(result)
+    });
+  }
+
 module.exports ={
     register,
     updateFornecedor,
-    getFornecedores
+    getFornecedores,
+    getFornecedorById,
 }

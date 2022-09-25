@@ -344,7 +344,7 @@ const abrirModal = (produto) =>{
                       <div className="row-produto">
                        
                               <label className='label-nome'>Nome:</label>
-                            <input type="text"  placeholder="Nome" disabled value={nome || ""}/>       
+                            <input type="text"  placeholder="Nome" disabled value={nome || ""} />       
                    
                         
                               <label>Telefone:</label>

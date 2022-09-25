@@ -4,6 +4,7 @@ import ClienteService from '../../Service/ClienteService';
 import ProdutoService from '../../Service/ProdutoService';
 import PedidoService from '../../Service/PedidoService';
 import "./Home.css"
+import { FcBusinessman, FcClock, FcFilingCabinet, FcSurvey } from 'react-icons/fc';
 
 const Home = () => {
   const [totalCliente, setTotalCliente] = useState();
@@ -43,16 +44,16 @@ const Home = () => {
      <div className="esquerdo">
         <div className="linha--esquerda">
                 <div className="item">
-                    <span>Produtos</span>
+                    <span>Produtos <i><FcFilingCabinet /></i></span>
                     <span className='numero'>{totalProdutos}</span>
                 </div>
 
                 <div className="item">
-                  <span>Vendas</span>
+                  <span>Vendas <i><FcSurvey /></i></span>
                 <span className='numero'>{totalVendas}</span>
                 </div>
                 <div className="item">
-                   <span>Clientes</span>
+                   <span>Clientes <i><FcBusinessman /></i></span>
                    <span className='numero'>{totalCliente}</span>
                 </div>
         </div>
@@ -60,7 +61,8 @@ const Home = () => {
      </div>
      <div className="direito">
         <div className="ultimas--vendas">
-
+            <span> Ultimas Vendas <i><FcClock /></i></span> 
+            
             {ultimasVendas.length >0 ? (
               <>
                <table >
