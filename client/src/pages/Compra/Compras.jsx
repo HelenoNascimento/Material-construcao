@@ -5,10 +5,14 @@ import {useState,useEffect} from 'react'
 import FornecedorService from '../../Service/FornecedorService';
 import ProdutoService from '../../Service/ProdutoService';
 import Select from 'react-select'
+import CompraService from '../../Service/CompraService';
 
 
 const Compras = () => {
 
+  //ultima Compra
+  const[ultimaCompra, setUltimaCompra] = useState("");
+  const [controlaUltimo, setControlaUltimo] = useState(false);
 
   //dados do produto
   const [listaProdutos, setListaProdutos] = useState("");
@@ -27,8 +31,11 @@ const Compras = () => {
   const [quantidade, setQuantidade] = useState("");
   const [valorTotal, setValorTotal] = useState("");
   const [carrinho, setCarrinho] = useState([]);
+  const [atualizaCarrinho, setAtualizaCarrinho] = useState(false)
+  const [totalCompra, setTotalCompra] = useState("");
+ 
 
-
+  const today = new Date();
 //array dos selects
   const liProdutos = [];
   const liFornecedor = [];
@@ -56,6 +63,11 @@ const Compras = () => {
   }
   
 //carrega dados
+const ultimoPedido = async() =>{
+  let ultimaC = await CompraService.getUltimaCompra();
+  setUltimaCompra(ultimaC[0])
+}
+
 
 useEffect(() => {
 
@@ -64,9 +76,20 @@ useEffect(() => {
      let fornecedores = await FornecedorService.getAllFornecedores();
      setListaProdutos(produtos);
      setListaFornecedor(fornecedores) 
+    
+    
   }
+  ultimoPedido();
   carregaDados();
+  console.log(ultimaCompra.id)
+ 
+ 
 },[])
+
+ 
+
+
+
 // { value: cliLista.id, label: cliLista.nome }
 if(listaProdutos){
   listaProdutos.forEach(protudo =>{
@@ -82,20 +105,25 @@ if(listaFornecedor){
 
 //preenche campos
 useEffect(() =>{
+  
   const preencheCampos  = async ()=>{
     let produto  = await ProdutoService.getProdutoById(produtoSelecionado)
    let forn = await FornecedorService.getFornecedorById(FornecedorSelecionado)
     setProduto(produto[0])
    
-    
-  setCodigoFornecedor(forn.id)
-  setNomeFornecedor(forn.nome)
-  setTelefoneFornecedor(forn.telefone) 
+   if(forn){
+    setCodigoFornecedor(forn.id)
+    setNomeFornecedor(forn.nome)
+    setTelefoneFornecedor(forn.telefone) 
+   }
+  
 
   }
+  
   preencheCampos();
+  
  
-},[produtoSelecionado,FornecedorSelecionado])
+},[produtoSelecionado,FornecedorSelecionado,carrinho])
 
 //carrinho
 
@@ -105,19 +133,96 @@ useEffect(()=>{
 
 },[quantidade,carrinho])
 
-const AdicionaCarrinho = (e) =>{
-  //e.preventDefault();
-let item = {
-  idProduto: produto.id,
-  quantidade: quantidade,
-  valor_Item: produto.valor,
-  valor_total: produto.valor * quantidade,
-  Compra: "1",
+//**********************Atualiza total do pedido **************** */
+const atualizaTotal = () =>{
+  let total = 0
+  carrinho.forEach(item =>{
+    total += item.valor_total
+   
+  })
+  setTotalCompra(total)
 }
-carrinho.push(item)
-//setCarrinho(...carrinho + item)
-console.log(carrinho)
+
+
+//ADICONANDO ITEM NO CARRINHO
+
+const AdicionaCarrinho = (e) =>{
+  setAtualizaCarrinho(false)
+  let controleCarrinho = 0;
+  //e.preventDefault();
+  controleCarrinho = 0;
+carrinho.map(itemCarrinho =>{
+  setAtualizaCarrinho(false)
   
+    if(itemCarrinho.idProduto === produtoSelecionado){
+    
+      itemCarrinho.quantidade = parseInt(itemCarrinho.quantidade) + parseInt(quantidade)
+      itemCarrinho.valor_total= parseInt(itemCarrinho.quantidade) * parseInt(itemCarrinho.valor_Item)
+      console.log("ja tem ")
+      
+      controleCarrinho = 1
+      setAtualizaCarrinho(false)
+     //setQuantidade("");
+     atualizaTotal();
+      return
+    }
+})
+ultimoPedido();
+
+if(controleCarrinho === 0){
+ 
+  let item = {
+    idProduto: produto.id,
+    nomeProduto: produto.nome,
+    quantidade: quantidade,
+    valor_Item: produto.valor,
+    valor_total: produto.valor * quantidade,
+    Compra: ultimaCompra.id+1,
+  }
+  carrinho.push(item)
+  controleCarrinho = 0;
+  setAtualizaCarrinho(true)
+  atualizaTotal();
+
+  //setControlaUltimo(true);
+}
+
+
+
+//setCarrinho(...carrinho + item)
+
+//console.log(carrinho)
+//console.log(atualizaCarrinho)
+}
+useEffect(()=>{
+  console.log("teste")
+},[atualizaCarrinho])
+
+const finalizarPedido =  (e) =>{
+e.preventDefault();
+ultimoPedido();
+   
+    const compra = {
+        total: totalCompra,
+        data: today.toLocaleDateString(),
+        data_entrega: today.toLocaleDateString(),
+        status: "Pendente",
+        idFornecedor: codigoFornecedor
+    } 
+   CompraService.novaCompra(compra); 
+    console.log(compra)
+    console.log(carrinho)
+    console.log(ultimaCompra.id)
+
+   carrinho.forEach(item =>{
+      const novoItemCompra = {
+        quantidade: item.quantidade,
+        valor_item: item.valor_Item,
+        idProduto: item.idProduto,
+        idCompra: ultimaCompra.id+1
+      }
+    CompraService.itemCompra(novoItemCompra);
+   })
 }
 
   return (
@@ -177,7 +282,7 @@ console.log(carrinho)
                     <input type="text" className='input-numero' placeholder="Quantidade"  onChange={(e) => setQuantidade(e.target.value)}/> 
                       <button onClick={AdicionaCarrinho}>Adicionar</button>
                     <label className='label-est'>Valor total:</label>
-                    <input type="text"  placeholder="Valor Total" disabled value={valorTotal || ""}/> 
+                    <input type="text"  placeholder="Valor Total" disabled value={totalCompra || ""}/> 
 
               </div>
               <div className="row-carrinho">
@@ -196,7 +301,7 @@ console.log(carrinho)
                         </thead>
                         <tbody>
                         {carrinho.map(item => (<tr key={item.idProduto}> 
-                        <td>{item.idProduto}</td>
+                        <td>{item.nomeProduto}</td>
                         <td>{item.quantidade}</td>
                         <td>{item.valor_Item}</td>
                         <td>{item.valor_total}</td>
@@ -210,7 +315,7 @@ console.log(carrinho)
                       ) : (<p>Sem itens</p>) }
                     
                  </div>}
-                           <button>Finalizar Venda</button>
+                           <button onClick={finalizarPedido}>Finalizar Venda</button>
               </div>
               
           </div>

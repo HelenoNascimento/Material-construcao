@@ -193,7 +193,7 @@ const handleVendas = (e) =>{
  if(item.idProduto == produto){
   item.quantidade = parseInt(item.quantidade) + parseInt(quantidade)
   item.totalDoItem= parseInt(item.quantidade) * parseInt(item.valor)
-  console.log("entrou aqui")
+ 
   setControlaTotal(true)
   atualizaTotal();
   controleItemVenda = 1
@@ -399,11 +399,8 @@ const abrirModal = (produto) =>{
                                                <th>Quantidade</th>
                                                <th>Valor unitario</th> 
                                                <th>Valor total</th> 
-                                           
-                                             
-                                               <th>Remover</th>
-                                               </tr>
-                                             
+                                              <th>Remover</th>
+                                               </tr>                                        
                                                </thead>
                                                <tbody>
                                                  {vendas.map(produto => (<tr key={produto.produto}>

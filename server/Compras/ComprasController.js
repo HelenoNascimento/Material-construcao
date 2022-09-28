@@ -6,7 +6,7 @@ const Compras = require("./Compras");
 const ItemCompra = require("./ItemCompra");
 const router = express.Router();
 
-
+//pegando todas as compras
 const getAllCompras = async(req, res) =>{
     Compras.findAll({
         order:[
@@ -18,6 +18,8 @@ const getAllCompras = async(req, res) =>{
         res.send(produtos);
     })
 }
+
+// Realizando uma nova compra
 const novaCompra = async( req, res) =>{
     const { idFornecedor, total, data, data_entrega, status } = req.body;
     const novaCompra = await Compras.create({
@@ -33,6 +35,8 @@ const novaCompra = async( req, res) =>{
         console.log(error);
     })
 }
+
+
 const novoItemCompra = async (req, res)=>{
 
     const{ quantidade,  valor_item, idProduto, idCompra} = req.body;
@@ -49,8 +53,28 @@ const novoItemCompra = async (req, res)=>{
     })
 }
 
+
+//pegando a ultima compra
+
+const getUltimaCompra = async (req, res) => {
+
+    Compras.findAll({
+        limit: 1,
+        order:[
+            ['id', 'DESC']
+        ]
+    }).then((result) => {
+        res.json(result)
+    }).catch((err) => {
+        res.json(err)
+    })
+    
+
+}
+
 module.exports = {
     getAllCompras,
     novaCompra,
     novoItemCompra,
+    getUltimaCompra,
 }
