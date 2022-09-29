@@ -45,10 +45,36 @@ const itemCompra = async(item) =>{
     })
 }
 
+//LISTANDO TODAS AS COMPRAS
 
+const getAllCompras = async() =>{
 
+    const compras = await Axios.get(api + "/compras")
+        .then((response) =>{
+            return response.data
+        } ).catch((err) => console.log(err));
 
+        return compras
+}
 
+//LISTANDO AS ULTIMAS COMPRAS
+const getUltimasCompras = async() =>{
+    const ultimas = await Axios.get(api+ "/compras/ultimasCompras")
+        .then((response) => {
+            return response.data;
+        }).catch((err) => console.error(err));
+        return ultimas;
+}
+
+//pegando compra pelo id
+const getCompraById = async (id) =>{
+
+    const compra = await Axios.get(api + "/compra/"+id)
+        .then((response) => {  
+            return response.data;
+        }).catch((err) => console.log(err));
+        return compra;
+}
 
 
 
@@ -60,7 +86,10 @@ const itemCompra = async(item) =>{
 const CompraService = {
     novaCompra,
     getUltimaCompra,
-    itemCompra
+    itemCompra,
+    getAllCompras,
+    getUltimasCompras,
+    getCompraById
 }
 
 export default CompraService;

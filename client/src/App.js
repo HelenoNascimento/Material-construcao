@@ -13,6 +13,7 @@ import Cliente from './pages/Cliente/Cliente';
 import Vendas from './pages/Vendas/Vendas';
 import Pedido from './pages/Pedido/Pedido';
 import Compras from './pages/Compra/Compras';
+import CompraPedido from './pages/CompraPedido/CompraPedido';
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/vendas" element={<Vendas />}/>
           <Route path="/compras" element={<Compras />}/>
           <Route path="/pedidos/:id" element={<Pedido />}/>
+          <Route path="/compra/:id" element={<CompraPedido />}/>
         </Routes>
         </main>
       <Footer />

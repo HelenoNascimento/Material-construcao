@@ -1,0 +1,13 @@
+.compras--container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+}
+
+.lista--compras{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}

@@ -13,9 +13,7 @@ const {id} = useParams()
 
 // **********************carrega o pedido pelo id ********************
 useEffect(() => {
-
     const loadUltimoPedido = async () =>{
-        
           const pedido = await PedidoService.getPedidoID(id);
           setPedido(pedido)
     }

@@ -4,13 +4,19 @@ import ClienteService from '../../Service/ClienteService';
 import ProdutoService from '../../Service/ProdutoService';
 import PedidoService from '../../Service/PedidoService';
 import "./Home.css"
-import { FcBusinessman, FcClock, FcFilingCabinet, FcSurvey } from 'react-icons/fc';
+import { FcBusinessman, FcClock, FcFilingCabinet, FcShipped, FcSurvey, FcTodoList } from 'react-icons/fc';
+import CompraService from '../../Service/CompraService';
+import FornecedorService from '../../Service/FornecedorService';
 
 const Home = () => {
   const [totalCliente, setTotalCliente] = useState();
   const [totalProdutos, setTotalProdutos] = useState();
   const [totalVendas, setTotalVendas] = useState();
+  const [totalFornecedores, setTotalFornecedores] = useState();
+  const [totalCompras, setTotalCompras] = useState();
+  const [comprasPendente, setComprasPendentes] = useState();
   const [ultimasVendas, setUltimasVendas] = useState();
+  const [ultimasCompras, setUltimasCompras] = useState();
 
   useEffect (() =>{
       const carregaDados = async () =>{
@@ -18,13 +24,17 @@ const Home = () => {
         let produtos = await ProdutoService.getAllProdutos();
         let vendas = await PedidoService.getPedidos();
         let ultimas = await PedidoService.getUltimasVendas();
-       
-       
+        let ulCompras = await CompraService.getUltimasCompras();
+        let fornecedores = await FornecedorService.getAllFornecedores();
+        let compras = await CompraService.getAllCompras();
+       console.log(ulCompras)
         setUltimasVendas(ultimas)
-
+        setUltimasCompras(ulCompras)
         setTotalVendas(vendas.length)
         setTotalProdutos(produtos.length)
         setTotalCliente(clientes.length)
+        setTotalFornecedores(fornecedores.length)
+        setTotalCompras(compras.length);
 
         console.log(ultimasVendas)
        
@@ -37,9 +47,11 @@ const Home = () => {
   if(!ultimasVendas){
     return <p>Carregando...</p>
   }
-
+  if(!ultimasCompras){
+    return <p>Carregando...</p>
+  }
   return (
-    <div className='container'>
+    <div className='container--home'>
       
      <div className="esquerdo">
         <div className="linha--esquerda">
@@ -54,6 +66,21 @@ const Home = () => {
                 </div>
                 <div className="item">
                    <span>Clientes <i><FcBusinessman /></i></span>
+                   <span className='numero'>{totalCliente}</span>
+                </div>
+        </div>
+        <div className="linha--esquerda">
+                <div className="item">
+                    <span>Fornecedores <i><FcShipped /></i></span>
+                    <span className='numero'>{totalFornecedores}</span>
+                </div>
+
+                <div className="item">
+                  <span>Total compras <i><FcTodoList /></i></span>
+                <span className='numero'>{totalCompras}</span>
+                </div>
+                <div className="item">
+                   <span>Compras pendentes </span>
                    <span className='numero'>{totalCliente}</span>
                 </div>
         </div>
@@ -92,7 +119,40 @@ const Home = () => {
             ) : (
               <>teste</>
             )}
-         
+        </div>
+        <div className="ultimas--compras">
+        <span> Ultimas Compras <i><FcClock /></i></span> 
+        {ultimasCompras.length >0 ? (
+              <>
+               <table >
+            <thead>
+                <tr>
+                    <th>Numero</th> 
+                    <th>Fornecedor</th>
+                    <th>Total</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                </tr>  
+              </thead>
+             
+              <tbody>
+              {ultimasCompras.map(compra => (
+              <tr key={compra.id}>
+                  <td> {compra.id}</td>
+                  <td> {compra.fornecedor.nome}</td>
+                  <td>{compra.total} </td>
+                  <td> {compra.data} </td>
+                  <td> {compra.status} </td>
+              </tr>
+             ))}
+              </tbody>
+
+              </table>
+              
+              </>
+            ) : (
+              <>teste</>
+            )}
 
         </div>
      </div>

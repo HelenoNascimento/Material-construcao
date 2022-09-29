@@ -3,7 +3,7 @@ main{
     padding: 0;
     width: 98.5vw;
 }
-.container{
+.container--home{
     margin: 0;
     padding: 0;
     display: flex;
@@ -53,7 +53,7 @@ main{
     font-weight: bold;
 }
 
-.ultimas--vendas{
+.ultimas--vendas, .ultimas--compras{
     margin-top: 1rem;
     background-color: #fff;
     box-shadow: 5px 5px 5px rgb(190, 189, 189);
@@ -64,7 +64,9 @@ main{
     flex-direction: column;
     justify-content: space-evenly;
     overflow: hidden;
-    
+}
+.ultimas--compras{
+    height: 250px;
 }
 .vendas{
     display: flex;
@@ -74,31 +76,46 @@ main{
     align-items: center;
     border-bottom: 2px solid rgba(117, 115, 115, 0.2);
 }
-.ultimas--vendas table{
-   
+.ultimas--vendas table,
+.ultimas--compras table{
      width: 90%;
 }
-.ultimas--vendas th{
+.ultimas--vendas th,
+.ultimas--compras th{
    color: #414141;
 }
 
 .ultimas--vendas th, td{
     padding: 10px;
     text-align: center;
-    width: auto;
-    
+    width: auto;  
+}
+.ultimas--compras th td{
+    padding: 5px;
+    width: auto;;
+    text-align: center;
+    width: auto;  
 }
 
-.ultimas--vendas tr:nth-child(even){
+
+.ultimas--vendas tr:nth-child(even),
+.ultimas--compras tr:nth-child(even){
     background-color:  #f3f5f4;
 }
-.ultimas--vendas tr:hover{
+.ultimas--vendas tr:hover,
+.ultimas--compras tr:hover{
     background-color: #a8a9aa;
     color: #fff;
 }
 
-.ultimas--vendas span{
+.ultimas--vendas span,
+.ultimas--compras span{
     margin-top: 1rem;
     font-size: 1.5rem;
     color: #807c7c;
+}
+.ultimas--compras tr{
+    padding: 10px;
+    text-align: center;
+    width: auto;  
 }

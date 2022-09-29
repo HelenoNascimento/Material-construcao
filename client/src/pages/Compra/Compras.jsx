@@ -6,13 +6,16 @@ import FornecedorService from '../../Service/FornecedorService';
 import ProdutoService from '../../Service/ProdutoService';
 import Select from 'react-select'
 import CompraService from '../../Service/CompraService';
+import ListaCompras from '../../componentes/ListaCompras';
+
 
 
 const Compras = () => {
 
   //ultima Compra
   const[ultimaCompra, setUltimaCompra] = useState("");
-  const [controlaUltimo, setControlaUltimo] = useState(false);
+  const[controlaUltimo, setControlaUltimo] = useState(false);
+  const[compras, setCompras] = useState("");
 
   //dados do produto
   const [listaProdutos, setListaProdutos] = useState("");
@@ -72,22 +75,24 @@ const ultimoPedido = async() =>{
 useEffect(() => {
 
   const carregaDados= async() =>{
+     let compras = await CompraService.getAllCompras();
      let produtos = await ProdutoService.getAllProdutos();
      let fornecedores = await FornecedorService.getAllFornecedores();
      setListaProdutos(produtos);
      setListaFornecedor(fornecedores) 
-    
-    
+     setCompras(compras)
+     
   }
   ultimoPedido();
   carregaDados();
-  console.log(ultimaCompra.id)
+  
  
  
 },[])
 
  
-
+console.log("compras")
+  console.log(compras)
 
 
 // { value: cliLista.id, label: cliLista.nome }
@@ -219,7 +224,7 @@ ultimoPedido();
         quantidade: item.quantidade,
         valor_item: item.valor_Item,
         idProduto: item.idProduto,
-        idCompra: ultimaCompra.id+1
+        idCompra: ultimaCompra.id
       }
     CompraService.itemCompra(novoItemCompra);
    })
@@ -317,14 +322,14 @@ ultimoPedido();
                  </div>}
                            <button onClick={finalizarPedido}>Finalizar Venda</button>
               </div>
-              
+            
           </div>
           
-          <div>
-         
-          </div>
       </div>
-
+      <div className='compras'>     
+                        <ListaCompras compras = {compras}/>
+          </div>
+        
     </div>
   )
 }

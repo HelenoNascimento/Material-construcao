@@ -68,13 +68,39 @@ const getUltimaCompra = async (req, res) => {
     }).catch((err) => {
         res.json(err)
     })
-    
-
 }
+//PESQUISANDO AS ULTIMAS 3 COMPRAS
+const getUltimasCompras = async(req, res) =>{
+    Compras.findAll({
+        limit:3,
+        order:[
+            ['id', 'DESC']
+        ],
+        include: [{model: Produto},{model: Fornecedor}]
+        
+    }).then(produtos =>{
+        res.send(produtos);
+    })
+  }
+
+  //pesquisando compra pelo id
+
+  const getCompraById = async(req, res) =>{
+    const{id} = req.params;
+
+    Compras.findByPk(id,{
+        include: [{model: Produto},{model: Fornecedor}]
+    }).then(pedido =>{
+        res.send(pedido);
+    }).catch(err =>console.log(err));
+  }
+  
 
 module.exports = {
     getAllCompras,
     novaCompra,
     novoItemCompra,
     getUltimaCompra,
+    getUltimasCompras,
+    getCompraById,
 }
