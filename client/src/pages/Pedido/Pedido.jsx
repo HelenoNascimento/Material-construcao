@@ -53,9 +53,10 @@ useEffect(() => {
             <thead>
                 <tr>
                     <th>Codigo Produto</th> 
-                    <th>Total do pedido</th>
+                    <th>Produto</th>
                     <th>Valor venda</th>
                     <th>Quantidade</th>
+                    <th>Valor total</th>
                 </tr>  
               </thead>
               <tbody>
@@ -65,6 +66,7 @@ useEffect(() => {
                         <td> {pd.nome} </td>
                         <td> R$ {pd.valor} </td>
                         <td> {pd.ItemPedidos.quantidade} </td>
+                        <td> R$ {pd.ItemPedidos.quantidade * pd.valor} </td>
                     </tr>))}
               </tbody>
 

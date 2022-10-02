@@ -224,7 +224,7 @@ ultimoPedido();
         quantidade: item.quantidade,
         valor_item: item.valor_Item,
         idProduto: item.idProduto,
-        idCompra: ultimaCompra.id
+        idCompra: ultimaCompra.id +1
       }
     CompraService.itemCompra(novoItemCompra);
    })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FcViewDetails } from 'react-icons/fc'
+import { FcSearch, FcViewDetails } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 import './ListaCompras.css'
 
@@ -32,7 +32,7 @@ const ListaCompras = ({compras}) => {
                     <td>
                     <div className="icons">
                     
-                    <Link to={`/compra/${compra.id}`}> <i><FcViewDetails /></i></Link>
+                    <Link to={`/compra/${compra.id}`}> <i><FcSearch /></i></Link>
                    
                      
                     </div>

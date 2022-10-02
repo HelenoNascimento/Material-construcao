@@ -1,5 +1,5 @@
 import React from 'react'
-import { FcViewDetails } from 'react-icons/fc'
+import { FcSearch, FcViewDetails } from 'react-icons/fc'
 import { Link } from 'react-router-dom'
 import Pedido from '../pages/Pedido/Pedido'
 import "./Pedidos.css"
@@ -42,7 +42,7 @@ const Pedidos = ({pedidos}) => {
                   <td>
                     <div className="icons">
                     
-                    <Link to={`/pedidos/${pedido.id}`}> <i><FcViewDetails /></i></Link>
+                    <Link to={`/pedidos/${pedido.id}`}> <i><FcSearch /></i></Link>
                    
                      
                     </div>
