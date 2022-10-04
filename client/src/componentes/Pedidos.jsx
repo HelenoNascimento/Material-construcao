@@ -36,7 +36,7 @@ const Pedidos = ({pedidos}) => {
                 {pedidos.map(pedido => (<tr key={pedido.id}>
                   <td> {pedido.id}</td>
                   <td> {pedido.cliente.nome}</td>
-                  <td> {pedido.total} </td>
+                  <td>R$: {pedido.total},00</td>
                   <td> {pedido.data} </td>
                  
                   <td>

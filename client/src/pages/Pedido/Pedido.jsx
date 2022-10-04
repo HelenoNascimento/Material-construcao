@@ -28,23 +28,48 @@ useEffect(() => {
     
     <div className="pedido-container">
         {pedido.id == id ? (<>
-            <p>Pedido: {id}</p>
-            <div className="pedido-cliente">
-            <span>Nome</span>
-                <input type="text" placeholder='Nome' value={pedido.cliente.nome || ""} disabled/>
-            <span>Endereco</span>
-                <input type="text" placeholder="Endereco" value={pedido.cliente.endereco || ""} disabled/>
-            <span>Telefone</span>
-                <input type="text" placeholder="Telefone" value={pedido.cliente.telefone || ""} disabled/>
-        </div>
-        <div className="pedido-pedido">
-                <span  >Numero pedido</span>
-                <input type="text" className='numerico' placeholder="pedido" value={pedido.id || ""} disabled/>
-                <span >Total</span>
-                <input type="text" className='numerico' placeholder="Total" value={pedido.total || ""} disabled/>
-                <span>Data</span>
-                <input type="text" placeholder="Data" value={pedido.data || ""} disabled/>
-        </div>
+          
+            <div className='pedido-dados'> 
+               
+              <div className="pedido-pedido">
+                    <div>
+                      <span className='pedido-span'>Numero pedido:</span>
+                      <span className='pedido-span'>{pedido.id}</span>
+                      
+                    </div>
+                    
+                    <div>
+                    <span className='pedido-span'>Total</span>
+                      <span className='pedido-span'>R$ {pedido.total},00</span>
+                    </div>
+                    <div>
+                      <span className='pedido-span'>Data</span>
+                      <span className='pedido-span'>{pedido.data }</span>
+                    </div>
+                 
+                    
+                    
+                  
+               </div>
+               <div className="pedido-cliente">
+                 <span>Dados Cliente</span>
+                  <div>
+                      <span>Nome</span>
+                      
+                      <input type="text" placeholder='Nome' value={pedido.cliente.nome || ""} disabled/>
+                  </div>
+                    <div>
+                      <span>Endereco</span>
+                      <input type="text" placeholder="Endereco" value={pedido.cliente.endereco || ""} disabled/>
+                    </div>
+                    <div>
+                      <span>Telefone</span>
+                      <input type="text" placeholder="Telefone" value={pedido.cliente.telefone || ""} disabled/>
+                    </div>
+                   
+                  </div>
+            </div>
+           
         <div className="pedido-itens">
 
                 <span>Itens do pedido</span>

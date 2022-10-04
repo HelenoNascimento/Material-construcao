@@ -1,18 +1,31 @@
 .pedido-container{
     width: 100%;
     height: auto;
+    background-color: rgb(247, 245, 245);
     border: 2px solid rgb(209, 204, 204);
+}
+.pedido-dados{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: space-around;
+    margin-top: 1rem;
+   
 }
 
 
 .pedido-cliente{
-    margin-top: 1rem;
+    width: 30%;
+    height: auto;
+    background-color: #fff;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.2rem;
-    border-bottom: 1px solid rgb(202, 202, 202);
     
+    border: 2px solid rgb(230, 227, 227);
+   
 }
 
 
@@ -22,15 +35,22 @@
 }
 
 .pedido-pedido{
+    width: 55%;
+    height: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
+    background-color: #fff;
+    margin-left: 2rem;
+    align-items: flex-start;
+    
+    flex-direction: column;
     gap: 1.2rem;
-    border-bottom: 1px solid rgb(202, 202, 202);
+    border: 1px solid rgb(202, 202, 202);
 }
-.pedido-pedido span{
-    margin-bottom: 1rem;
+.pedido-span{
+    color: rgb(90, 89, 89);
+    padding: 0.5rem;
+    font-size: 1.8rem;
+
 }
 .pedido-pedido .numerico{
     width: 10%;

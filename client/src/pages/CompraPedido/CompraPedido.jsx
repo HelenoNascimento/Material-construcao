@@ -41,45 +41,57 @@ if(!compra.fornecedor){
 console.log()
   return (
     <div className='container--pedidoCompra'>
-          <div className='dados-pedido'>
-                <div className='campo'>
-                    <span>Compra  </span>
-                    <input type="text" placeholder='Compra' disabled value={compra.id || ""}/>
+        
+              <div className='container-dados'>
+                   
+
+
+                <div className='dados-pedido'>
+                        <div className='campo'>
+                            <span className='span-pedido'>Compra  </span>
+                            <span className='span-pedido'>{compra.id}</span>
+             
+                        </div>
+                        <div className='campo'>
+                            <span className='span-pedido'>Total </span>
+                            <span className='span-pedido'>R$ {compra.total},00</span>
+                            
+                        </div>
+                        <div className='campo'>
+                            <span className='span-pedido'>Data </span>
+                            <span className='span-pedido'>{compra.data}</span>
+                          
+                        </div>
+                        
+                        <div className='campo'>
+                            <span className='span-pedido'>status </span>
+                            <select name="select" onChange={(e) => setStatus(e.target.value)}>
+                                <option value={compra.status}>{compra.status}</option>
+                                <option value="Entregue" >Entregue</option>
+                            </select>
+                        </div>
+                        
                 </div>
-                <div className='campo'>
-                    <span>Total </span>
-                    <input type="text" placeholder='Total'disabled value={compra.total || ""}/>
+                <div className="dados-fornecedor">
+                        
+                        <div className='campo'>
+                            <span>Fornecedor </span>
+                            <input type="text" placeholder='Fornecedor' disabled value={nomeFornecedor || ""}/>
+                        </div>
+                        <div className='campo'> 
+                                <span>Telefone </span>
+                                <input type="text" placeholder='Telefone' disabled value={telefoneFornecedor || ""}/>
+                        </div>
+                        <div className='campo'> 
+                            <span>Endereco </span>
+                                <input type="text" placeholder='Endereco' disabled value={enderecoFornecedor || ""}/>
+                        </div>
+                            
                 </div>
-                <div className='campo'>
-                    <span>Data </span>
-                    <input type="text" placeholder='Data' disabled value={compra.data || ""}/>
-                </div>
-                
-                <div className='campo'>
-                    <span>status </span>
-                     <select name="select" onChange={(e) => setStatus(e.target.value)}>
-                        <option value={compra.status}>{compra.status}</option>
-                        <option value="Entregue" >Entregue</option>
-                    </select>
-                </div>
-                
-          </div>
-        <div className="dados-fornecedor">
-       
-        <div className='campo'>
-            <span>Fornecedor </span>
-            <input type="text" placeholder='Fornecedor' disabled value={nomeFornecedor || ""}/>
+                  
+           
         </div>
-        <div className='campo'> 
-             <span>Telefone </span>
-             <input type="text" placeholder='Telefone' disabled value={telefoneFornecedor || ""}/>
-        </div>
-        <div className='campo'> 
-            <span>Endereco </span>
-             <input type="text" placeholder='Endereco' disabled value={enderecoFornecedor || ""}/>
-        </div>
-          
-        </div>
+        
         <div className="itens-compra">
         <span>Itens do pedido</span>
                 {compra.Produtos ?( 

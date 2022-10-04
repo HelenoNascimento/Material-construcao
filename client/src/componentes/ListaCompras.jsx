@@ -26,7 +26,7 @@ const ListaCompras = ({compras}) => {
                   <tr key={compra.id}>
                     <td>{compra.id}</td>
                     <td>{compra.fornecedor.nome}</td>
-                    <td>{compra.total}</td>
+                    <td>R$ {compra.total},00</td>
                     <td>{compra.status}</td>
                     <td>{compra.data}</td>
                     <td>
