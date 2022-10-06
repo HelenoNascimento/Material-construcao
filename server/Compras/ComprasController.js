@@ -1,6 +1,7 @@
 const express = require("express");
 const { validationResult } = require("express-validator");
 const Fornecedor = require("../Fornecedor/Fornecedor");
+const ProdutoController = require("../Produto/ProdutoController");
 const Produto = require("../Produto/Produto");
 const Compras = require("./Compras");
 const ItemCompra = require("./ItemCompra");
@@ -14,8 +15,8 @@ const getAllCompras = async(req, res) =>{
         ],
         include: [{model: Produto},{model: Fornecedor}]
         
-    }).then(produtos =>{
-        res.send(produtos);
+    }).then(compras =>{
+        res.send(compras);
     })
 }
 
@@ -59,14 +60,13 @@ const novoItemCompra = async (req, res)=>{
 const getUltimaCompra = async (req, res) => {
 
     Compras.findAll({
-        limit: 1,
         order:[
             ['id', 'DESC']
-        ]
-    }).then((result) => {
-        res.json(result)
-    }).catch((err) => {
-        res.json(err)
+        ],
+        include: [{model: Produto},{model: Fornecedor}]
+        
+    }).then(compras =>{
+        res.send(compras);
     })
 }
 //PESQUISANDO AS ULTIMAS 3 COMPRAS
@@ -83,6 +83,24 @@ const getUltimasCompras = async(req, res) =>{
     })
   }
 
+  //Pesquisando Compras Pendentes
+const getComprasPendentes = async(req, res) => {
+
+    Compras.findAll({
+       
+        order:[
+            ['id', 'DESC']
+        ],
+        where: {
+            status: "Pendente"
+        },
+    include: [{model: Produto},{model: Fornecedor}]
+    
+    }).then(produtos =>{
+        res.send(produtos);
+    })
+  
+}
   //pesquisando compra pelo id
 
   const getCompraById = async(req, res) =>{
@@ -96,6 +114,30 @@ const getUltimasCompras = async(req, res) =>{
   }
   
 
+  const recebeProduto = async (req, res) =>{
+
+    //const { idCliente, total_pedido, data, quantidade, valor, Id_produto, id_pedido } = req.body;
+    const { quantidade, idProduto, idCompra } = req.body;
+    const errors = validationResult(req);
+    
+    if(!errors.isEmpty()){
+        return res.status(400).json({ errors: errors.array()})
+    }
+    const status = "entrada";
+    await ProdutoController.updateSaldoProduto(idProduto,quantidade,status)
+
+    Compras.update(
+        {
+            status: "Entregue"},{
+                where: {
+                    id: idCompra
+                }
+            }).then(() =>{
+              //  res.status(200).json({  message: "Saldo produto Atualizado com sucesso!" });
+            }).catch(err => console.log(err));
+}
+       
+
 module.exports = {
     getAllCompras,
     novaCompra,
@@ -103,4 +145,6 @@ module.exports = {
     getUltimaCompra,
     getUltimasCompras,
     getCompraById,
+    recebeProduto,
+    getComprasPendentes,
 }

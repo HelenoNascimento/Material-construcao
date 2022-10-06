@@ -158,8 +158,8 @@ const pesquisaUmProduto = async(req, res) =>{
                     id: idProduto
                 }
             }).then(() =>{
-                //res.status(200).json({  message: "Saldo produto Atualizado com sucesso!" });
-            })
+              //  res.status(200).json({  message: "Saldo produto Atualizado com sucesso!" });
+            }).catch(err => console.log(err));
   }
 module.exports ={
     register,

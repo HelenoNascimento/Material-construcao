@@ -76,9 +76,30 @@ const getCompraById = async (id) =>{
         return compra;
 }
 
+//Recebendo produtos
+
+const recebeProduto = async(produto, quantidade, idCompra) =>{
+
+        Axios.post(api + "/compras/recebeProduto",{
+            quantidade: quantidade,
+            idProduto: produto,
+            idCompra: idCompra,
+        }).then((response) => response.data)
+        .catch((err) => console.log(err));
+
+}
 
 
+// get compras pendentes
 
+const getComprasPendentes = async () => {
+    const compras = await Axios.get(api+"/compras/pendente")
+    .then((response) => {
+        return response.data;
+    }).catch((err) => console.error(err));
+    return compras;
+    
+}
 
 
 
@@ -89,7 +110,9 @@ const CompraService = {
     itemCompra,
     getAllCompras,
     getUltimasCompras,
-    getCompraById
+    getCompraById,
+    recebeProduto,
+    getComprasPendentes
 }
 
 export default CompraService;

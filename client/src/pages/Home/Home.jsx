@@ -18,6 +18,7 @@ const Home = () => {
   const [ultimasVendas, setUltimasVendas] = useState();
   const [ultimasCompras, setUltimasCompras] = useState();
 
+
   useEffect (() =>{
       const carregaDados = async () =>{
         let clientes = await  ClienteService.getAllClientes();
@@ -27,6 +28,7 @@ const Home = () => {
         let ulCompras = await CompraService.getUltimasCompras();
         let fornecedores = await FornecedorService.getAllFornecedores();
         let compras = await CompraService.getAllCompras();
+        let pendent = await CompraService.getComprasPendentes();
        console.log(ulCompras)
         setUltimasVendas(ultimas)
         setUltimasCompras(ulCompras)
@@ -35,11 +37,13 @@ const Home = () => {
         setTotalCliente(clientes.length)
         setTotalFornecedores(fornecedores.length)
         setTotalCompras(compras.length);
+       setComprasPendentes(pendent.length)
+       
 
-        console.log(ultimasVendas)
+        console.log(comprasPendente)
        
       }
-
+      console.log(comprasPendente)
       carregaDados();
       
   },[])
@@ -81,7 +85,7 @@ const Home = () => {
                 </div>
                 <div className="item">
                    <span>Compras pendentes </span>
-                   <span className='numero'>{totalCliente}</span>
+                   <span className='numero'>{comprasPendente}</span>
                 </div>
         </div>
         

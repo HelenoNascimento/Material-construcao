@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
+
 import CompraService from '../../Service/CompraService'
 import "./CompraPedido.css"
 
@@ -13,6 +14,8 @@ const CompraPedido = () => {
     const [nomeFornecedor, setNomeFornecedor] = useState("");
     const [telefoneFornecedor, setTelefoneFornecedor] = useState("");
     const [enderecoFornecedor, setEnderecoFornecedor] = useState("");
+
+    const [entregue, setEntregue] = useState(false);
 
     const [status, setStatus] = useState("");
 
@@ -38,6 +41,28 @@ if(!compra){
 if(!compra.fornecedor){
     <p>Carregando</p>
 }
+
+
+//recebendo os produtos
+const recebendo =() =>{
+    if(compra.Produtos){
+        compra.Produtos.map(item => {
+            CompraService.recebeProduto(item.id,item.ItemCompra.quantidade, id)
+        })
+    }
+
+}
+
+useEffect(() =>{
+   
+    setEntregue(true)
+    console.log(compra.Produtos)
+          
+    //CompraService.recebeProduto(id,)
+    recebendo();
+    },[status])
+
+
 console.log()
   return (
     <div className='container--pedidoCompra'>
