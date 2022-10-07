@@ -6,8 +6,11 @@ Aplicação para gerenciamento de material de construção</br>
 ✅Gerenciamento de Cliente</br>
 ✅Gerenciamento de fornecedor</br>
 
-Funcionalidades de fazer pedidos para cliente</br>
-Recomendações de filmes/séries</br></br>
+Funcionalidades 
+Compra de material
+Venda de material
+dashboard de quantidade de material
+
 
 💻 Backend </br>
 Feito uma API no backend com NODEJS </br>
