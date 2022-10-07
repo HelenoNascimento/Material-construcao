@@ -52,6 +52,9 @@ main{
     color: rgb(18, 235, 83);
     font-weight: bold;
 }
+.item .risco{
+    color: rgb(243, 95, 10);
+}
 
 .ultimas--vendas, .ultimas--compras{
     margin-top: 1rem;

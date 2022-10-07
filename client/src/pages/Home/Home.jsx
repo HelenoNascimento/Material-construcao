@@ -85,7 +85,7 @@ const Home = () => {
                 </div>
                 <div className="item">
                    <span>Compras pendentes </span>
-                   <span className='numero'>{comprasPendente}</span>
+                   <span className='numero risco'>{comprasPendente}</span>
                 </div>
         </div>
         
