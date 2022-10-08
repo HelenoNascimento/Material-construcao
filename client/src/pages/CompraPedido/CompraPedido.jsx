@@ -27,7 +27,6 @@ const CompraPedido = () => {
             setEnderecoFornecedor(compr.fornecedor.endereco);
             setTelefoneFornecedor(compr.fornecedor.telefone);
             setCompra(compr)
-           
         }
         carregaCompra();
     },[])
@@ -49,6 +48,7 @@ const recebendo =() =>{
         compra.Produtos.map(item => {
             CompraService.recebeProduto(item.id,item.ItemCompra.quantidade, id)
         })
+        window.location.reload();
     }
 
 }
@@ -60,6 +60,7 @@ useEffect(() =>{
           
     //CompraService.recebeProduto(id,)
     recebendo();
+    
     },[status])
 
 
@@ -90,10 +91,19 @@ console.log()
                         
                         <div className='campo'>
                             <span className='span-pedido'>status </span>
-                            <select name="select" onChange={(e) => setStatus(e.target.value)}>
-                                <option value={compra.status}>{compra.status}</option>
-                                <option value="Entregue" >Entregue</option>
-                            </select>
+                            {compra.status === "Entregue" &&
+                                <select name="select" onChange={(e) => setStatus(e.target.value)} disabled>
+                                    <option value={compra.status}>{compra.status}</option>
+                                    
+                                </select>
+                            }
+                            {compra.status === "Pendente" &&
+                                <select name="select" onChange={(e) => setStatus(e.target.value)}>
+                                    <option value={compra.status}>{compra.status}</option>
+                                    <option value="Entregue" >Entregue</option>
+                                </select>
+                            }
+                           
                         </div>
                         
                 </div>

@@ -38,10 +38,14 @@ const Compras = () => {
   const [totalCompra, setTotalCompra] = useState("");
  
 
+
+  const [recarregar, setRecarregar] = useState(false);
+
   const today = new Date();
 //array dos selects
   const liProdutos = [];
   const liFornecedor = [];
+
 
   //carrinho
   //let carrinho = [];
@@ -88,7 +92,7 @@ useEffect(() => {
   
  
  
-},[])
+},[recarregar])
 
  
 console.log("compras")
@@ -204,7 +208,7 @@ useEffect(()=>{
 },[atualizaCarrinho])
 
 const finalizarPedido =  (e) =>{
-e.preventDefault();
+//e.preventDefault();
 ultimoPedido();
    
     const compra = {
@@ -228,7 +232,12 @@ ultimoPedido();
       }
     CompraService.itemCompra(novoItemCompra);
    })
+   closeModal();
+   //window.location.reload();
+   setRecarregar(true);
 }
+
+
 
   return (
     <div className='container--compras'>
