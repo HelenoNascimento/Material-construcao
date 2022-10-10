@@ -34,5 +34,5 @@ Fornecedor.hasMany(Produto,{
 */
 
 //Cliente.sync({force: true});
-
+Cliente.sync();
 module.exports = Cliente;

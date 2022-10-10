@@ -62,8 +62,8 @@ const getClientes = async(req, res)  =>{
         }).then((result) => {
                 res.json(result)
             });
-
       }
+      
 
 module.exports ={
     register,

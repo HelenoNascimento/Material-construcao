@@ -14,6 +14,7 @@ import Vendas from './pages/Vendas/Vendas';
 import Pedido from './pages/Pedido/Pedido';
 import Compras from './pages/Compra/Compras';
 import CompraPedido from './pages/CompraPedido/CompraPedido';
+import Login from './pages/Login/Login';
 
 
 
@@ -21,11 +22,13 @@ import CompraPedido from './pages/CompraPedido/CompraPedido';
 function App() {
   return (
     <div>
+      
       <BrowserRouter>
-    
+      
       <Header />
        <main >
         <Routes>
+        <Route path="/login" element ={<Login />}/>
           <Route path="/" element={<Home /> } />
           <Route path="/produto" element={<Produto /> } />
           <Route path="/fornecedor" element={<Fornecedor />}/>
@@ -34,6 +37,7 @@ function App() {
           <Route path="/compras" element={<Compras />}/>
           <Route path="/pedidos/:id" element={<Pedido />}/>
           <Route path="/compra/:id" element={<CompraPedido />}/>
+          
         </Routes>
         </main>
       <Footer />

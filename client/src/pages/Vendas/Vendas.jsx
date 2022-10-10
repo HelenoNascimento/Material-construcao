@@ -320,7 +320,7 @@ const abrirModal = (produto) =>{
       
       <div className="row"> 
         <span>Numero pedido</span>
-    <input type="text" placeholder="Numero pedido"  onChange={(e) => setBuscaIdPedido(e.target.value)} />
+        <input type="text" placeholder="Numero pedido"  onChange={(e) => setBuscaIdPedido(e.target.value)} />
         <span>Cliente</span>
         <input type="text" placeholder="Cliente" onChange={(e) => setBuscaNomePedido(e.target.value)}/>
         <button onClick={abrirModal}>Vender</button>

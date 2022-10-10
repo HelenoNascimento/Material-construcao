@@ -88,7 +88,7 @@ connection
         console.log(error);
     })
 
-    //connection.sync()
+    connection.sync()
  
 
 app.listen(3001, () =>{
