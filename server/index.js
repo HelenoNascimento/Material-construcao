@@ -21,12 +21,14 @@ const Clientes = require("./Cliente/Cliente")
     const routerClient = require("./Cliente/ClienteRoute");
     const routerPedido = require("./Pedidos/PedidoRoute")
     const routerCompra = require("./Compras/ComprasRouter");
-const Cliente = require('./Cliente/Cliente');
+    const routerUser = require("./Usuario/UsuarioRouter");
+    const Cliente = require('./Cliente/Cliente');
     
     app.use(routerCompra);
     app.use(routerClient);
     app.use(routerProdu);
     app.use(routerForne);
+    app.use(routerUser);
     app.use(routerPedido);
 
     app.get("/",(req, res)=>{

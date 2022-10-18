@@ -1,4 +1,5 @@
 const express = require("express");
+const { verifyJWT } = require("../Usuario/UsuarioController");
 const routerForne = express.Router();
 
 // controller
@@ -9,7 +10,7 @@ const {fornecedorCreateValidation } = require("./FornecedorValidations");
 
 
 //rotas
-routerForne.post("/fornecedor/register",fornecedorCreateValidation(), register);
+routerForne.post("/fornecedor/register",verifyJWT,fornecedorCreateValidation(), register);
 routerForne.get("/fornecedor",getFornecedores);
 routerForne.post("/fornecedor/update",updateFornecedor);
 routerForne.post("/fornecedor/getId",getFornecedorById);
