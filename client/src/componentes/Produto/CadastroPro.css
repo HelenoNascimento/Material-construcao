@@ -1,6 +1,32 @@
+.container-cadastro{
+    width: 50%;
+}
+
 .formulario{
     display: flex;
     flex-direction: column;
-    min-width: 400px;
+    max-width: 550px;
     margin: 0 auto;
+}
+
+.input_container.valor {
+    display: flex;
+    flex-direction: row;
+ 
+    align-items: center;
+    justify-content: center;
+}
+.input_container.valor input{
+   margin-left: 10px;
+}
+.input_container span {
+  margin-bottom: 10px;
+}
+
+.input_container.valor  .numerico{
+width: 30%;
+}
+
+.container-cadastro .register--button{
+    width: 30%;
 }

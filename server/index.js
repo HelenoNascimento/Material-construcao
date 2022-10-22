@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const connection = require("./Database/database")
+const production = require("./Database/database")
 const cors =require("cors");
 
 const Pedidos = require("./Pedidos/Pedidos")
@@ -81,8 +81,8 @@ const pedidos = Pedidos.findByPk(1,{
 //database
 //connection.sync()
 //connection.sync({force: true});
-connection.sync()
-connection
+//connection.sync()
+production
     .authenticate()
     .then(() =>{
         console.log("Conexão feita com sucesso!")
@@ -90,7 +90,7 @@ connection
         console.log(error);
     })
 
-    connection.sync()
+    production.sync()
  
 
 app.listen(3001, () =>{

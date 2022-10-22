@@ -9,7 +9,7 @@ const Op = Sequelize.Op;              // biblioteca de operadores
 // cadastrando um produto
 const register = async (req, res) =>{
 
-    const { nome, descricao, quantidade, idFornecedor, valor } = req.body;
+    const { nome, descricao, quantidade, idFornecedor, valor, status, valor_compra, minimo_estoque } = req.body;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({ errors: errors.array()})
@@ -20,6 +20,9 @@ const register = async (req, res) =>{
         quantidade: quantidade,
         idFornecedor: idFornecedor,
         valor: valor,
+        valor_compra: valor_compra,
+        minimo_estoque: minimo_estoque,
+        status: status,
     }).then(() =>{
         res.status(200).json({ Produto, message: "Produto atualizada com sucesso!" });
         
@@ -36,6 +39,9 @@ const getProdutos = async(req, res)  =>{
         order:[
             ['id', 'DESC']
         ],
+        where: {
+            status: "Ativo"
+        },
         include: [{model: Fornecedor}]
     }).then(produtos =>{
         res.send(produtos);
@@ -95,13 +101,15 @@ const pesquisaProdutoFornecedor = async(req, res) =>{
   const deleteProduto = async (req, res) =>{
     const { id } = req.body;
     if(id !== undefined){
-        Produto.destroy({
-            where:{
-                id: id
-            }
-        }).then(() =>{
-            res.status(200).json({  message: "Produto Deletado com sucesso!" });
-        })
+        Produto.update({
+                status: "Desativado", 
+                },{
+                    where: {
+                        id: id
+                    }
+                }).then(() =>{
+                    res.status(200).json({  message: "Produto Atualizado com sucesso!" });
+                })
     }else{
         res.redirect("/")
     }

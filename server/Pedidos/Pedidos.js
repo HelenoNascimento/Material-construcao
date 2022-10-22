@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
-const connection = require("../Database/database")
+const production = require("../Database/database")
 //const Fornecedor = require("../Fornecedor/Fornecedor");
 const Produto = require("../Produto/Produto")
 const Cliente = require("../Cliente/Cliente")
 
 
-const Pedidos = connection.define("pedidos",{
+const Pedidos = production.define("pedidos",{
 
     
     total:{

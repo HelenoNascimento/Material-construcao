@@ -15,6 +15,11 @@ const CadastroPro = () => {
     const [quantidade, setQuantidade] = useState("");
     const [fornecedores, setFornecedores] = useState("");
     const [valor, setValor] = useState("");
+    const [valorCompra, setValorCompra] = useState("");
+    const [minimoEstoque, setMinimoEstoque] = useState("");
+
+
+
     const [produtos, setProdutos] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
@@ -65,6 +70,10 @@ const CadastroPro = () => {
             quantidade: quantidade,
             idFornecedor: idFornecedor,
             valor: valor,
+            valor_compra: valorCompra,
+            status: "Ativo",
+            minimo_estoque: minimoEstoque,
+
         }
 
         //ProdutoService.cadastraProduto(newProduto)
@@ -76,6 +85,9 @@ const CadastroPro = () => {
             quantidade: quantidade,
             idFornecedor: idFornecedor,
             valor: valor,
+            valor_compra: valorCompra,
+            status: "Ativo",
+            minimo_estoque: minimoEstoque,
         }).then((response) =>{
             console.log(response);
             
@@ -100,7 +112,7 @@ const CadastroPro = () => {
 console.log(idFornecedor)
 
   return (
-   
+        <div className="container-cadastro">
          <form onSubmit={handleClickButton} className="formulario">
         <div className='input_container' >
             <label>Nome:</label>
@@ -115,26 +127,41 @@ console.log(idFornecedor)
       
          
        
-        <div className='input_container'> 
-            <label>Quantidade:</label>
-            <input
-             type="text" 
-             placeholder="Quantidade"  
-            onChange={(e) => setQuantidade(e.target.value)} 
-            value={quantidade || ""}
-            />   
+        <div className='input_container valor'> 
+            <label>Quantidade:
+                <input
+                className="numerico"
+                type="number" 
+                placeholder="Quantidade"  
+                onChange={(e) => setQuantidade(e.target.value)} 
+                value={quantidade || ""}
+                />  
+            </label> 
+             <label>Minimo estoque:
+                <input
+                className="numerico"
+                type="number" 
+                placeholder="Quantidade"  
+                onChange={(e) => setMinimoEstoque(e.target.value)} 
+                value={minimoEstoque || ""}
+                />   
+            </label>
            
-            </div>
+        </div>
         
         <div className='input_container'>
             <label>Fornecedor:</label>
             <Select options={teste} placeholder="Fornecedores" className="select"  onChange={(e) => setIdFornecedor(e.value)}/> 
         </div>
-        <div className='input_container'>
-            <label>Valor de venda :</label>
-            <input type="text" placeholder="Valor" 
-            onChange={(e) => setValor(e.target.value)} value={valor || ""}/>   
-
+        <div className='input_container valor'>
+            <label>Valor de venda :
+                <input type="number" placeholder="Valor"  className="numerico"
+                onChange={(e) => setValor(e.target.value)} value={valor || ""}/> 
+            </label>
+            <label>Valor de Compra : 
+                <input type="number" placeholder="Valor" className="numerico"
+                onChange={(e) => setValorCompra(e.target.value)} value={valorCompra || ""}/>   
+            </label>
         </div>
         <div className='input_container'>
           
@@ -150,7 +177,7 @@ console.log(idFornecedor)
        
         
     </form>
-   
+    </div>
   )
 }
 

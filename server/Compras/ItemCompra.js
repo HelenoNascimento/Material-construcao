@@ -1,10 +1,10 @@
 const Sequelize = require("sequelize");
-const connection = require("../Database/database")
+const production = require("../Database/database")
 //const Fornecedor = require("../Fornecedor/Fornecedor");
 const Produto = require("../Produto/Produto")
 
 
-const ItemCompra =  connection.define("ItemCompra",{
+const ItemCompra =  production.define("ItemCompra",{
 
     quantidade: {
         type: Sequelize.FLOAT,
@@ -18,5 +18,5 @@ const ItemCompra =  connection.define("ItemCompra",{
 });
 
 //ItemCompra.sync({force: true});
-connection.sync()
+//connection.sync()
 module.exports = ItemCompra;

@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const Compras = require("../Compras/Compras");
 const ItemCompra = require("../Compras/ItemCompra");
-const connection = require("../Database/database")
+const production = require("../Database/database")
 const Fornecedor = require("../Fornecedor/Fornecedor");
 const ItemPedidos = require("../Pedidos/ItemPedidos");
 //const itemPedido = require("../Pedidos/ItemPedidos");
@@ -11,7 +11,7 @@ const ItemPedidos = require("../Pedidos/ItemPedidos");
 //const Pedidos = require("../Pedidos/pedidos")
 const Pedidos = require("../Pedidos/pedidos")
 
-const Produto = connection.define("Produto",{
+const Produto = production.define("Produto",{
  
 
     nome:{
@@ -29,6 +29,18 @@ const Produto = connection.define("Produto",{
     valor:{
         type: Sequelize.FLOAT,
         allowNull: false
+    },
+    status:{
+        type: Sequelize.STRING,
+        allowNull: true
+    }, 
+    valor_compra:{
+        type: Sequelize.FLOAT,
+        allowNull: true
+    },
+    minimo_estoque:{
+        type: Sequelize.FLOAT,
+        allowNull: true
     },
     
 
@@ -81,3 +93,12 @@ Compras.belongsToMany(Produto,{
 //Produto.sync({force: true});
 Produto.sync()
 module.exports = Produto;
+/*
+    valor_compra:{
+        type: Sequelize.FLOAT,
+        allowNull: true
+    },
+    minimo_estoque:{
+        type: Sequelize.FLOAT,
+        allowNull: true
+    },*/

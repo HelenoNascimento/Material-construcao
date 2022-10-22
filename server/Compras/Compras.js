@@ -1,11 +1,11 @@
 const Sequelize = require("sequelize");
-const connection = require("../Database/database")
+const production = require("../Database/databaseold")
 
 const Produto = require("../Produto/Produto")
 const Fornecedor = require("../Fornecedor/Fornecedor")
 
 
-const Compras =  connection.define("compras",{
+const Compras =  production.define("compras",{
 
     total: {
         type: Sequelize.FLOAT,

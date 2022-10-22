@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const connection = require("../Database/database")
+const connection = require("../Database/databaseold")
 //const Fornecedor = require("../Fornecedor/Fornecedor");
 const Produto = require("../Produto/Produto")
 

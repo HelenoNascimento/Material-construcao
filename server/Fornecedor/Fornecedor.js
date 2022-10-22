@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const connection = require("../Database/database")
 
 
-
 const Fornecedor = connection.define("fornecedor",{
 
     nome:{

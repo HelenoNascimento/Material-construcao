@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
-const connection = require("../Database/database")
+const production = require("../Database/database")
 const itemPedidos = require("../Pedidos/ItemPedidos");
 const Pedidos = require("../Pedidos/pedidos");
 
-const Cliente = connection.define("cliente",{
+const Cliente = production.define("cliente",{
 
     nome:{
         type: Sequelize.STRING,
@@ -12,6 +12,10 @@ const Cliente = connection.define("cliente",{
     endereco:{
         type: Sequelize.STRING,
         allowNull: false
+    },
+    cidade:{
+        type: Sequelize.STRING,
+        allowNull: true
     },
     telefone:{
         type: Sequelize.STRING,
@@ -34,5 +38,5 @@ Fornecedor.hasMany(Produto,{
 */
 
 //Cliente.sync({force: true});
-Cliente.sync();
+//Cliente.sync();
 module.exports = Cliente;
