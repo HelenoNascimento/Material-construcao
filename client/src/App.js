@@ -15,6 +15,7 @@ import Pedido from './pages/Pedido/Pedido';
 import Compras from './pages/Compra/Compras';
 import CompraPedido from './pages/CompraPedido/CompraPedido';
 import Login from './pages/Login/Login';
+import Tela_produto from './pages/Produto/Tela_produto';
 
 
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/cliente" element={<Cliente />}/>
           <Route path="/vendas" element={<Vendas />}/>
           <Route path="/compras" element={<Compras />}/>
+          <Route path="/produto/:id" element={<Tela_produto />}/>
           <Route path="/pedidos/:id" element={<Pedido />}/>
           <Route path="/compra/:id" element={<CompraPedido />}/>
           

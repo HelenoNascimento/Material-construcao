@@ -57,13 +57,48 @@ const query = `%${nome}%`; // string de consulta
 console.log(query)
     Produto.findAll({
         
-        where: {nome: { [Op.like]: query }},
+        where: {nome: { [Op.like]: query }},     
         include: [{model: Fornecedor}]
         
     })
         .then((result) => {
             res.send(result);
         });
+  }
+
+  //pesquisando produtos desativados
+
+  const getProdutosDesativados = async(req, res) =>{
+    Produto.findAll({
+        order:[
+            ['id', 'DESC']
+        ],
+        where: {
+            status: "Desativado"
+        },
+        include: [{model: Fornecedor}]
+    }).then(produtos =>{
+        res.send(produtos);
+    })
+  }
+  //pesquisando produtos estoque baixo
+  const getProdutoBaixoEstoque = async(req,res) =>{
+    const { Op } = require("sequelize");
+    Produto.findAll({
+        order:[
+            ['id', 'DESC']
+        ],
+        where: {
+            quantidade: {
+                [Op.lte]: 55,
+            }
+           
+            //status: "Desativado"
+        },
+        include: [{model: Fornecedor}]
+    }).then(produtos =>{
+        res.send(produtos);
+    })
   }
 
   //PESQUISANDO PRODUTOS id
@@ -119,7 +154,9 @@ const pesquisaProdutoFornecedor = async(req, res) =>{
 const pesquisaUmProduto = async(req, res) =>{
     const { id } = req.body;
     console.log(id)
-        Produto.findByPk(id)
+        Produto.findByPk(id,{
+            include: [{model: Fornecedor}]
+        })
             .then((result) => {
                 res.json(result)
             });
@@ -128,15 +165,19 @@ const pesquisaUmProduto = async(req, res) =>{
       //atualizando produto
 
       const updateProduto = async(req, res) =>{
-        const { id, nome, descricao, quantidade, idFornecedor, valor } = req.body;
-
+        const { id, nome, descricao, quantidade, idFornecedor, valor,status , valor_compra, minimo_estoque } = req.body;
+        console.log(id)
         Produto.update(
             {
                 nome: nome, 
                 descricao: descricao,
                 quantidade: quantidade, 
                 idFornecedor: idFornecedor, 
-                valor: valor},{
+                valor: valor,
+                status: status,
+                valor_compra: valor_compra,
+                minimo_estoque: minimo_estoque,
+                    },{
                     where: {
                         id: id
                     }
@@ -178,5 +219,7 @@ module.exports ={
     updateProduto,
     pesquisaProdutoID,
     pesquisaProdutoFornecedor,
-    updateSaldoProduto
+    updateSaldoProduto,
+    getProdutosDesativados,
+    getProdutoBaixoEstoque,
 };

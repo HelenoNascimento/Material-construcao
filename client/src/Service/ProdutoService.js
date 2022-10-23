@@ -3,6 +3,21 @@
 import Axios from "axios";
 import { api } from "../utils/config"
 
+//pesquisando um produto pelo ID
+
+const getUmProduto = async(id)=>{
+        try {
+            const res = await Axios.post(api +"/produto/pesquisaUm",{
+                id: id,
+            }).then((response)=>{
+                //console.log(response.data)
+                return response.data;
+            })
+            return res
+        } catch (error) {
+            console.log(error)
+        }
+}
 
 
 //Lista todos os produtos
@@ -10,14 +25,11 @@ import { api } from "../utils/config"
 const getAllProdutos = async () => {
  
        try {
-
         const res = await fetch(api+"/produto")
               .then((res) => res.json())
               .catch((err) => err);
              //console.log(res)
-          return res;
-
-        
+          return res; 
       } catch (error) {
         console.log(error);
       }
@@ -74,15 +86,33 @@ const getProdutosByFornecedor = async(idFornecedor)=>{
 return res
 }
 
+//pesquisando produtos desativados
 
+const getProdutosDesativados = async() =>{
+    const produtos = await Axios.get(api +"/produtoDesativado")
+    .then((response)=>{
+        return response.data
+    }).catch((err)=>{console.error(err)});
+    console.log(produtos)
+    return produtos;
 
+}
+
+//pesquisando produtos baixo estoque
+const getProdutosEstoqueBaixo = async() =>{
+    const produtos = await Axios.get(api +"/produto/baixoEstoque")
+        .then((response) =>{
+            return response.data
+        }).catch((err)=>{console.error(err)});
+    return produtos;
+}
 
 
 
 //atualizando produto
 
 const updateProduto = async (produto) =>{
-    
+    console.log(produto.id)
     try{
         const res = await Axios.post(api+ "/produto/update",{
             id: produto.id,
@@ -90,8 +120,12 @@ const updateProduto = async (produto) =>{
             descricao: produto.descricao,
             valor: produto.valor,
             quantidade: produto.quantidade,
-            idFornecedor: produto.idFornecedor
+            idFornecedor: produto.idFornecedor,
+            status: produto.status,
+            valor_compra: produto.valor_compra,
+            minimo_estoque: produto.minimo_estoque,
         })
+      
         return res;
     }catch(error){
         console.log(error);
@@ -120,7 +154,10 @@ const ProdutoService = {
     PesquisaProduto,
     getProdutoById,
     getProdutosByFornecedor,
-    cadastraProduto
+    cadastraProduto,
+    getUmProduto,
+    getProdutosDesativados,
+    getProdutosEstoqueBaixo
 }
 
 export default ProdutoService

@@ -28,6 +28,7 @@ const Produto = () => {
     const [ fornecedoresPesq, setFornecedoresPesq ] = useState("");
     const [pesquisaFornecedor, setPesquisaFornecedor] = useState("");
 
+    const [status, setStatus] = useState("Ativo");
     const fornLista = [];
 
 
@@ -112,7 +113,6 @@ useEffect(() => {
     
  
     useEffect(() => {
-
         const loadAll = async () =>{
         const prod = await ProdutoService.getAllProdutos();
        setProdutos(prod)
@@ -148,20 +148,46 @@ useEffect(() => {
            setProdutos(consultar)
            //console.log(produtos)
         }
-    
-     
-      
-    
-  
       
        }
+
    
     
    setLoading(false)
    pesquisar();
   }, [consulta])
 
+  const handleEstoqueBaixo = () =>{
+    const loadEstoqueBaixo = async () =>{
+      const prod = await ProdutoService.getProdutosEstoqueBaixo();
+    setProdutos(prod)
+    setTeste(prod)
+    }
+  setLoading(false)
+  loadEstoqueBaixo();
+  }
 
+  useEffect(()=> {
+    if(status === "Desativado"){
+          const loadDesativado = async () =>{
+            const prod = await ProdutoService.getProdutosDesativados();
+          setProdutos(prod)
+          setTeste(prod)
+          }
+        setLoading(false)
+        loadDesativado();
+    }else{
+      const loadAll = async () =>{
+        const prod = await ProdutoService.getAllProdutos();
+       setProdutos(prod)
+       setTeste(prod)
+     
+      }
+   
+     setLoading(false)
+     loadAll();
+    }
+  },[status])
     if(loading){
       return <p>Carregando...</p>
     }
@@ -186,13 +212,16 @@ useEffect(() => {
             <div className="lista-produtos">
 
                   <div className="row-pesquisa"> 
-                  
+                  <input type="text" placeholder="Digite o nome ou codigo " 
+                          onChange={(e) => setConsulta(e.target.value)} className="pesquisaNome"/>
                         <Select   options={fornLista} placeholder="Fornecedores" className="pesquisaForne"  
                           onChange={(e) => setPesquisaFornecedor(e.value)}/>
-
-                          <input type="text" placeholder="Digite o nome ou codigo " 
-                          onChange={(e) => setConsulta(e.target.value)} className="pesquisaNome"/>
-                          
+                          <button onClick={handleEstoqueBaixo}>Estoque baixo</button>
+                        
+                          <select name="select" onChange={(e) => setStatus(e.target.value)}>
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Desativado" >Desativado</option>
+                         </select>
                           <button className='button-pesquisa' onClick={handlePesquisar}>Pesquisar</button>
                     </div>
                   

@@ -6,6 +6,8 @@ import { BiCommentEdit  } from 'react-icons/bi';
 import "./CardProd.css"
 import Axios from "axios";
 import Modal from '../Modal';
+import { FcSearch } from 'react-icons/fc';
+import { Link } from 'react-router-dom';
 
 
 const CardProd = ({produtos,handleDelete,handleEdit}) => {
@@ -58,6 +60,7 @@ useEffect(() => {
                   <td> {produto.quantidade} </td>
                   <td>
                     <div className="icons">
+                    <Link to={`/produto/${produto.id}`}> <i><FcSearch /></i></Link>
                     <i onClick={() => {handleEdit(produto)}}><BiCommentEdit /></i> 
                     <i onClick={() => {handleDelete(produto.id)}}><AiFillDelete className='delete' /></i> 
                      

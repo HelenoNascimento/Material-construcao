@@ -1,0 +1,70 @@
+body{
+    box-sizing: border-box;
+}
+.container-tela-produto{
+    width: 100%;
+    height: 600px;
+}
+.cabecalho{
+    width: 100%;
+    height: 100px;
+}
+.container-campo{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: auto; 
+    gap: 1rem;
+    box-sizing: border-box;
+    border: 2px solid rgb(236, 232, 232);
+}
+
+.campo-esquerdo{
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    width: 50%;
+    height: 400px;
+    gap: 1rem;
+}
+.campo-esquerdo span{
+    display: flex;
+ }
+ .campo-esquerdo select{
+    margin-top: -1em;
+    margin-bottom: .5em;
+    border-radius: 4px ;
+    margin-top: 6px;
+    border: 1px solid rgb(185, 182, 182);
+    width: 100%;
+    height: 35px;
+}
+.campo-direito{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    height: 400px;
+    gap: 1rem;
+}
+.campo-direito span{
+   display: flex;
+}
+.c-dados{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.c-dados input{
+    width: 95%;
+}
+.c-dados.numerico input{
+    display: flex;
+    width: 50%;
+    
+}
+

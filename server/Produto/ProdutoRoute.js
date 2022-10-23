@@ -3,7 +3,7 @@ const routerProdu = express.Router();
 
 
 // controller
-const { register, getProdutos, pesquisaProduto, deleteProduto, pesquisaUmProduto, updateProduto, pesquisaProdutoID, pesquisaProdutoFornecedor, updateSaldoProduto } = require("./ProdutoController")
+const { register, getProdutos, pesquisaProduto, deleteProduto, pesquisaUmProduto, updateProduto, pesquisaProdutoID, pesquisaProdutoFornecedor, updateSaldoProduto, getProdutosDesativados, getProdutoBaixoEstoque } = require("./ProdutoController")
 
 // midleware
 const {produtoCreateValidation } = require("./ProdutoValidations");
@@ -15,6 +15,8 @@ routerProdu.post("/produto/pesquisa",pesquisaProduto)
 routerProdu.post("/produto/pesquisaUm",pesquisaUmProduto)
 routerProdu.post("/produto/delete",deleteProduto)
 routerProdu.post("/produto/update",updateProduto)
+routerProdu.get("/produtoDesativado",getProdutosDesativados);
+routerProdu.get("/produto/baixoEstoque",getProdutoBaixoEstoque);
 routerProdu.post("/produto/produtoid",pesquisaProdutoID)
 routerProdu.post("/produto/produtoFornecedor",pesquisaProdutoFornecedor)
 routerProdu.post("/produto/updateQuantidade",updateSaldoProduto)
